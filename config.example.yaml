@@ -1,0 +1,32 @@
+settings:
+  check_interval_minutes: 30
+  headless: true
+  browser_timeout_seconds: 45
+  alert_cooldown_minutes: 120
+  user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36"
+  screenshot_on_error: true
+  notify_on_recovery: true
+
+monitors:
+  # 1) Pesquise o trecho no site normalmente.
+  # 2) Copie a URL da página de resultados.
+  # 3) Cole abaixo.
+  # O robô vai abrir essa página, ler preços em R$, escolher o menor e comparar com o histórico.
+  - name: "GOL CNF -> SSA ida 2026-12-19"
+    provider: "generic"
+    enabled: true
+    url: "COLE_AQUI_A_URL_DA_BUSCA_DA_GOL"
+    max_price_brl: 900.00
+    min_drop_percent: 3
+    alert_on_any_change: false
+    alert_when_price_below_max: true
+    notes: "Exemplo: Confins para Salvador"
+
+  - name: "123Milhas CNF -> SSA ida 2026-12-19"
+    provider: "generic"
+    enabled: false
+    url: "COLE_AQUI_A_URL_DA_BUSCA_DA_123MILHAS"
+    max_price_brl: 900.00
+    min_drop_percent: 3
+    alert_on_any_change: false
+    alert_when_price_below_max: true

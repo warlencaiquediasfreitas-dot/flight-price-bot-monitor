@@ -1,0 +1,19 @@
+settings:
+  check_interval_minutes: 30
+  headless: true
+  browser_timeout_seconds: 60
+  alert_cooldown_minutes: 120
+  user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36"
+  screenshot_on_error: true
+  notify_on_recovery: true
+
+monitors:
+  - name: "123Milhas CNF para SSA 18-12-2026 a 23-12-2026"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=18-12-2026&volta=23-12-2026&classe=3&is_loyalty=0&search_id=2263245452"
+    max_price_brl: 1600.00
+    min_drop_percent: 3
+    alert_on_any_change: true
+    alert_when_price_below_max: false
+    notes: "Primeiro monitor no GitHub Actions"

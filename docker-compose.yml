@@ -1,0 +1,11 @@
+services:
+  flight-price-bot:
+    build: .
+    container_name: flight-price-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - ./data:/app/data
+      - ./screenshots:/app/screenshots
