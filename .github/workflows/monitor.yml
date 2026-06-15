@@ -1,17 +1,25 @@
-name: Monitorar passagens
+name: Monitorar página
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "7 * * * *"
+    # Monitoramento frequente: duas vezes por hora
+    - cron: "17,47 * * * *"
+
+    # Status de rotina: aproximadamente a cada 2 horas
+    - cron: "23 */2 * * *"
 
 permissions:
   contents: write
 
+concurrency:
+  group: flight-price-monitor
+  cancel-in-progress: false
+
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - name: Baixar repositorio
@@ -44,6 +52,85 @@ jobs:
           TWILIO_FROM: ""
           TWILIO_TO: ""
         run: python -m app.main --once
+
+      - name: Enviar status de rotina no WhatsApp
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '23 */2 * * *'
+        env:
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+        run: |
+          python - <<'PY'
+          import os
+          import sqlite3
+          import urllib.parse
+          import urllib.request
+          from datetime import datetime, timezone
+
+          def brl(value):
+              return f"R$ {value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+          db_path = "data/flight_prices.sqlite3"
+          con = sqlite3.connect(db_path)
+          con.row_factory = sqlite3.Row
+
+          rows = con.execute("""
+              SELECT monitor_name, checked_at, min_price_brl
+              FROM price_checks
+              WHERE id IN (
+                  SELECT MAX(id)
+                  FROM price_checks
+                  GROUP BY monitor_name
+              )
+              ORDER BY monitor_name
+          """).fetchall()
+
+          if not rows:
+              print("Sem consultas salvas para enviar status.")
+              raise SystemExit(0)
+
+          now_br = datetime.now(timezone.utc).astimezone().strftime("%d/%m/%Y %H:%M:%S")
+
+          lines = [
+              "✅ Status do robô de passagens",
+              "",
+              "O robô rodou agora e está funcionando.",
+              f"Horário: {now_br}",
+              "",
+              "Últimos preços encontrados:"
+          ]
+
+          for row in rows:
+              lines.append(f"- {row['monitor_name']}: {brl(float(row['min_price_brl']))}")
+
+          lines.extend([
+              "",
+              "Observação: se aparecer preço menor ou mudança relevante, o robô também enviará alerta separado."
+          ])
+
+          text = "\n".join(lines)
+
+          phone = os.environ.get("CALLMEBOT_PHONE", "")
+          apikey = os.environ.get("CALLMEBOT_APIKEY", "")
+
+          if not phone or not apikey:
+              print("WhatsApp não configurado nos Secrets.")
+              raise SystemExit(0)
+
+          url = "https://api.callmebot.com/whatsapp.php?" + urllib.parse.urlencode({
+              "phone": phone,
+              "text": text,
+              "apikey": apikey,
+          })
+
+          try:
+              req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  response.read()
+              print("Status enviado por WhatsApp.")
+          except Exception as exc:
+              print(f"Falha ao enviar status por WhatsApp: {type(exc).__name__}")
+              raise SystemExit(1)
+          PY
 
       - name: Salvar historico no repositorio
         if: always()
