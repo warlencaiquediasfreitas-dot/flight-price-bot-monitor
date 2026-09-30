@@ -40,24 +40,15 @@ jobs:
 
       - name: Rodar robo uma vez
         env:
-          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
-          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
-          SMTP_HOST: ""
-          SMTP_PORT: ""
-          SMTP_USER: ""
-          SMTP_PASSWORD: ""
-          ALERT_EMAIL_TO: ""
-          TWILIO_ACCOUNT_SID: ""
-          TWILIO_AUTH_TOKEN: ""
-          TWILIO_FROM: ""
-          TWILIO_TO: ""
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python -m app.main --once
 
-      - name: Enviar status de rotina no WhatsApp
+      - name: Enviar status de rotina no Telegram
         if: github.event_name == 'workflow_dispatch' || github.event.schedule == '23 */2 * * *'
         env:
-          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
-          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           python - <<'PY'
           import os
@@ -70,6 +61,10 @@ jobs:
               return f"R$ {value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
           db_path = "data/flight_prices.sqlite3"
+          if not os.path.exists(db_path):
+              print("Base de dados ainda não existe.")
+              raise SystemExit(0)
+
           con = sqlite3.connect(db_path)
           con.row_factory = sqlite3.Row
 
@@ -109,26 +104,26 @@ jobs:
 
           text = "\n".join(lines)
 
-          phone = os.environ.get("CALLMEBOT_PHONE", "")
-          apikey = os.environ.get("CALLMEBOT_APIKEY", "")
+          token = os.environ.get("TELEGRAM_TOKEN", "")
+          chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
 
-          if not phone or not apikey:
-              print("WhatsApp não configurado nos Secrets.")
+          if not token or not chat_id:
+              print("Telegram não configurado nos Secrets.")
               raise SystemExit(0)
 
-          url = "https://api.callmebot.com/whatsapp.php?" + urllib.parse.urlencode({
-              "phone": phone,
+          url = f"https://api.telegram.org/bot{token}/sendMessage"
+          payload = urllib.parse.urlencode({
+              "chat_id": chat_id,
               "text": text,
-              "apikey": apikey,
-          })
+          }).encode("utf-8")
 
           try:
-              req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+              req = urllib.request.Request(url, data=payload, headers={"User-Agent": "Mozilla/5.0"})
               with urllib.request.urlopen(req, timeout=30) as response:
                   response.read()
-              print("Status enviado por WhatsApp.")
+              print("Status enviado por Telegram.")
           except Exception as exc:
-              print(f"Falha ao enviar status por WhatsApp: {type(exc).__name__}")
+              print(f"Falha ao enviar status por Telegram: {type(exc).__name__}")
               raise SystemExit(1)
           PY
 
