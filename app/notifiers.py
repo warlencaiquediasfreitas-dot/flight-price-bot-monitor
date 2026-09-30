@@ -81,6 +81,17 @@ class TwilioWhatsAppNotifier:
 class MultiNotifier:
     def __init__(self) -> None:
         self.notifiers = [EmailNotifier(), TelegramBotNotifier(), TwilioWhatsAppNotifier()]
+        
+        # Teste imediato para validar o Telegram
+        try:
+            telegram = TelegramBotNotifier()
+            if telegram.enabled():
+                telegram.send(AlertMessage(
+                    subject="🚀 Teste do Bot de Voo", 
+                    body="O Telegram está configurado e a comunicar com sucesso!"
+                ))
+        except Exception as e:
+            print(f"Erro ao enviar mensagem de teste do Telegram: {e}")
 
     def send(self, msg: AlertMessage) -> None:
         errors: list[str] = []
