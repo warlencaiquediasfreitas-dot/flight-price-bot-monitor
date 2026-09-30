@@ -38,25 +38,21 @@ class EmailNotifier:
             smtp.send_message(email)
 
 
-class CallMeBotWhatsAppNotifier:
+class TelegramBotNotifier:
     def enabled(self) -> bool:
-        return bool(os.getenv("CALLMEBOT_PHONE") and os.getenv("CALLMEBOT_APIKEY"))
+        return bool(os.getenv("TELEGRAM_TOKEN") and os.getenv("TELEGRAM_CHAT_ID"))
 
     def send(self, msg: AlertMessage) -> None:
         if not self.enabled():
             return
         text = f"{msg.subject}\n\n{msg.body}"
-        url = (
-            "https://api.callmebot.com/whatsapp.php?"
-            + urllib.parse.urlencode(
-                {
-                    "phone": os.environ["CALLMEBOT_PHONE"],
-                    "text": text,
-                    "apikey": os.environ["CALLMEBOT_APIKEY"],
-                }
-            )
-        )
-        response = requests.get(url, timeout=30)
+        token = os.environ["TELEGRAM_TOKEN"]
+        url = f"https://api.telegram.org/bot{token}/sendMessage"
+        data = {
+            "chat_id": os.environ["TELEGRAM_CHAT_ID"],
+            "text": text,
+        }
+        response = requests.post(url, data=data, timeout=30)
         response.raise_for_status()
 
 
@@ -84,7 +80,7 @@ class TwilioWhatsAppNotifier:
 
 class MultiNotifier:
     def __init__(self) -> None:
-        self.notifiers = [EmailNotifier(), CallMeBotWhatsAppNotifier(), TwilioWhatsAppNotifier()]
+        self.notifiers = [EmailNotifier(), TelegramBotNotifier(), TwilioWhatsAppNotifier()]
 
     def send(self, msg: AlertMessage) -> None:
         errors: list[str] = []
