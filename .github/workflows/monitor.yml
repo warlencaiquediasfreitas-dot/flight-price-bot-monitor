@@ -3,11 +3,14 @@ name: Monitorar página
 on:
   workflow_dispatch:
   schedule:
-    # Monitoramento frequente: duas vezes por hora
+    # Monitoramento silencioso de quedas de preço: duas vezes por hora
     - cron: "17,47 * * * *"
 
-    # Status de rotina: aproximadamente a cada 2 horas
-    - cron: "23 */2 * * *"
+    # Status no Telegram de MADRUGRADA (00h às 06h no Brasil = 03h às 09h UTC): de 1 em 1 hora
+    - cron: "5 3-9 * * *"
+
+    # Status no Telegram no RESTANTE DO DIA (08h às 22h no Brasil): a cada 2 horas
+    - cron: "23 1,11,13,15,17,19,21,23 * * *"
 
 permissions:
   contents: write
@@ -45,7 +48,7 @@ jobs:
         run: python -m app.main --once
 
       - name: Enviar status de rotina no Telegram
-        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '23 */2 * * *'
+        if: always() && (github.event_name == 'workflow_dispatch' || github.event.schedule != '17,47 * * * *')
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -55,7 +58,7 @@ jobs:
           import sqlite3
           import urllib.parse
           import urllib.request
-          from datetime import datetime, timezone
+          from datetime import datetime, timezone, timedelta
 
           def brl(value):
               return f"R$ {value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
@@ -83,13 +86,14 @@ jobs:
               print("Sem consultas salvas para enviar status.")
               raise SystemExit(0)
 
-          now_br = datetime.now(timezone.utc).astimezone().strftime("%d/%m/%Y %H:%M:%S")
+          br_tz = timezone(timedelta(hours=-3))
+          now_br = datetime.now(br_tz).strftime("%d/%m/%Y %H:%M:%S")
 
           lines = [
               "✅ Status do robô de passagens",
               "",
               "O robô rodou agora e está funcionando.",
-              f"Horário: {now_br}",
+              f"Horário (BRT): {now_br}",
               "",
               "Últimos preços encontrados:"
           ]
