@@ -8,22 +8,332 @@ settings:
   notify_on_recovery: true
 
 monitors:
-  - name: "123Milhas CNF para SSA 18-12-2026 a 23-12-2026"
+  # ==================== SALVADOR (SSA) ====================
+  - name: "Salvador (SSA) | 26/12 a 01/01"
     provider: "generic"
     enabled: true
-    url: "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=18-12-2026&volta=23-12-2026&classe=3&is_loyalty=0&search_id=2263245452"
-    max_price_brl: 1600.00
-    min_drop_percent: 3
-    alert_on_any_change: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=26-12-2026&volta=01-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
     alert_when_price_below_max: false
-    notes: "Monitor Salvador no GitHub Actions"
 
-  - name: "123Milhas CNF para FOR 18-12-2026 a 23-12-2026"
+  - name: "Salvador (SSA) | 28/12 a 03/01"
     provider: "generic"
     enabled: true
-    url: "https://123milhas.com/v2/busca?de=CNF&para=FOR&adultos=2&criancas=0&bebes=0&ida=18-12-2026&volta=23-12-2026&classe=3&is_loyalty=0&search_id=2269050504"
-    max_price_brl: 1600.00
-    min_drop_percent: 3
-    alert_on_any_change: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=28-12-2026&volta=03-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
     alert_when_price_below_max: false
-    notes: "Monitor Fortaleza no GitHub Actions"
+
+  - name: "Salvador (SSA) | 29/12 a 04/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=29-12-2026&volta=04-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Salvador (SSA) | 30/12 a 04/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=30-12-2026&volta=04-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Salvador (SSA) | 02/01 a 08/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=02-01-2027&volta=08-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Salvador (SSA) | 04/01 a 10/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=04-01-2027&volta=10-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  # ==================== MACEIÓ (MCZ) ====================
+  - name: "Maceió (MCZ) | 26/12 a 01/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=MCZ&adultos=2&criancas=0&bebes=0&ida=26-12-2026&volta=01-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Maceió (MCZ) | 28/12 a 03/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=MCZ&adultos=2&criancas=0&bebes=0&ida=28-12-2026&volta=03-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Maceió (MCZ) | 29/12 a 04/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=MCZ&adultos=2&criancas=0&bebes=0&ida=29-12-2026&volta=04-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Maceió (MCZ) | 30/12 a 04/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=MCZ&adultos=2&criancas=0&bebes=0&ida=30-12-2026&volta=04-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Maceió (MCZ) | 02/01 a 08/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=MCZ&adultos=2&criancas=0&bebes=0&ida=02-01-2027&volta=08-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Maceió (MCZ) | 04/01 a 10/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=MCZ&adultos=2&criancas=0&bebes=0&ida=04-01-2027&volta=10-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  # ==================== PORTO SEGURO (BPS) ====================
+  - name: "Porto Seguro (BPS) | 26/12 a 01/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=BPS&adultos=2&criancas=0&bebes=0&ida=26-12-2026&volta=01-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Porto Seguro (BPS) | 28/12 a 03/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=BPS&adultos=2&criancas=0&bebes=0&ida=28-12-2026&volta=03-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Porto Seguro (BPS) | 29/12 a 04/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=BPS&adultos=2&criancas=0&bebes=0&ida=29-12-2026&volta=04-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Porto Seguro (BPS) | 30/12 a 04/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=BPS&adultos=2&criancas=0&bebes=0&ida=30-12-2026&volta=04-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Porto Seguro (BPS) | 02/01 a 08/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=BPS&adultos=2&criancas=0&bebes=0&ida=02-01-2027&volta=08-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Porto Seguro (BPS) | 04/01 a 10/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=BPS&adultos=2&criancas=0&bebes=0&ida=04-01-2027&volta=10-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  # ==================== ILHÉUS (IOS) ====================
+  - name: "Ilhéus (IOS) | 26/12 a 01/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=IOS&adultos=2&criancas=0&bebes=0&ida=26-12-2026&volta=01-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Ilhéus (IOS) | 28/12 a 03/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=IOS&adultos=2&criancas=0&bebes=0&ida=28-12-2026&volta=03-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Ilhéus (IOS) | 29/12 a 04/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=IOS&adultos=2&criancas=0&bebes=0&ida=29-12-2026&volta=04-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Ilhéus (IOS) | 30/12 a 04/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=IOS&adultos=2&criancas=0&bebes=0&ida=30-12-2026&volta=04-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Ilhéus (IOS) | 02/01 a 08/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=IOS&adultos=2&criancas=0&bebes=0&ida=02-01-2027&volta=08-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Ilhéus (IOS) | 04/01 a 10/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=IOS&adultos=2&criancas=0&bebes=0&ida=04-01-2027&volta=10-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  # ==================== JOÃO PESSOA (JPA) ====================
+  - name: "João Pessoa (JPA) | 26/12 a 01/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=JPA&adultos=2&criancas=0&bebes=0&ida=26-12-2026&volta=01-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "João Pessoa (JPA) | 28/12 a 03/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=JPA&adultos=2&criancas=0&bebes=0&ida=28-12-2026&volta=03-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "João Pessoa (JPA) | 29/12 a 04/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=JPA&adultos=2&criancas=0&bebes=0&ida=29-12-2026&volta=04-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "João Pessoa (JPA) | 30/12 a 04/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=JPA&adultos=2&criancas=0&bebes=0&ida=30-12-2026&volta=04-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "João Pessoa (JPA) | 02/01 a 08/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=JPA&adultos=2&criancas=0&bebes=0&ida=02-01-2027&volta=08-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "João Pessoa (JPA) | 04/01 a 10/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=JPA&adultos=2&criancas=0&bebes=0&ida=04-01-2027&volta=10-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  # ==================== ARACAJU (AJU) ====================
+  - name: "Aracaju (AJU) | 26/12 a 01/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=AJU&adultos=2&criancas=0&bebes=0&ida=26-12-2026&volta=01-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Aracaju (AJU) | 28/12 a 03/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=AJU&adultos=2&criancas=0&bebes=0&ida=28-12-2026&volta=03-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Aracaju (AJU) | 29/12 a 04/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=AJU&adultos=2&criancas=0&bebes=0&ida=29-12-2026&volta=04-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Aracaju (AJU) | 30/12 a 04/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=AJU&adultos=2&criancas=0&bebes=0&ida=30-12-2026&volta=04-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Aracaju (AJU) | 02/01 a 08/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=AJU&adultos=2&criancas=0&bebes=0&ida=02-01-2027&volta=08-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
+
+  - name: "Aracaju (AJU) | 04/01 a 10/01"
+    provider: "generic"
+    enabled: true
+    url: "https://123milhas.com/v2/busca?de=CNF&para=AJU&adultos=2&criancas=0&bebes=0&ida=04-01-2027&volta=10-01-2027&classe=3&is_loyalty=0"
+    max_price_brl: 1500.00
+    min_drop_percent: 5
+    alert_on_any_change: false
+    alert_when_price_below_max: false
