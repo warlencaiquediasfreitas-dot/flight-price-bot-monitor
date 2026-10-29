@@ -3,11 +3,11 @@ name: Monitorar página
 on:
   workflow_dispatch:
   schedule:
-    # DE MADRUGADA (00h, 01h, 02h, 03h, 04h, 05h e 06h no Brasil = 03h às 09h UTC): roda de 1 em 1 hora
-    - cron: "5 3-9 * * *"
+    # MADRUGADA (00h às 06h BRT = 03h às 09h UTC): tenta nos minutos 18 e 48 para o GitHub não pular
+    - cron: "18,48 3-9 * * *"
 
-    # NO RESTANTE DO DIA (08h às 22h no Brasil): roda a cada 2 horas
-    - cron: "5 1,11,13,15,17,19,21,23 * * *"
+    # DIA E NOITE (de 2 em 2 horas no Brasil): tenta nos minutos 18 e 48 para garantir a execução
+    - cron: "18,48 1,11,13,15,17,19,21,23 * * *"
 
 permissions:
   contents: write
@@ -44,12 +44,11 @@ jobs:
           TELEGRAM_CHAT_ID: ""
         run: python -m app.main --once
 
-      - name: Avisar no Telegram SOMENTE se achar passagem ate R$ 1200
+      - name: Avisar resultado no Telegram
         if: always()
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          EVENT_NAME: ${{ github.event_name }}
         run: |
           python - <<'PY'
           import os
@@ -117,7 +116,6 @@ jobs:
 
           token = os.environ.get("TELEGRAM_TOKEN", "")
           chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
-          event_name = os.environ.get("EVENT_NAME", "")
 
           if not token or not chat_id:
               print("Telegram não configurado nos Secrets.")
@@ -139,6 +137,7 @@ jobs:
           br_tz = timezone(timedelta(hours=-3))
           now_br = datetime.now(br_tz).strftime("%d/%m/%Y às %H:%M")
 
+          # 1) Se achou passagem ate R$ 1.200,00 por pessoa, manda o ALERTA COMPLETO COM PRECO NO TOPO:
           if approved_results:
               approved_results.sort(key=lambda x: x["price"])
               for item in approved_results:
@@ -156,20 +155,22 @@ jobs:
                   ])
                   send_telegram(card)
               print(f"Enviados {len(approved_results)} alertas dentro do orcamento.")
-          else:
-              if event_name == "workflow_dispatch" and all_results:
-                  cheapest = min(all_results, key=lambda x: x["price"])
-                  msg = "\n".join([
-                      "✅ <b>Robô de Fim de Ano configurado e vigiando!</b>",
-                      "",
-                      "Neste exato minuto, nenhuma passagem de Réveillon está abaixo de <b>R$ 1.200,00</b> por pessoa.",
-                      "",
-                      f"<i>(Menor valor visto agora no teste: {brl(cheapest['price'])} por pessoa para {cheapest['city']} — Ida: {cheapest['ida']} | Volta: {cheapest['volta']})</i>.",
-                      "",
-                      "🌙 <b>Vigilância da Madrugada Ativa:</b> o robô vai pesquisar sozinho de 1 em 1 hora entre 00h e 06h da manhã e só vai apitar quando achar passagem de até <b>R$ 1.200,00</b>!"
-                  ])
-                  send_telegram(msg)
-              print("Nenhuma passagem abaixo de R$ 1.200,00 nesta verificacao.")
+
+          # 2) Se NAO achou nada ate R$ 1.200,00, manda um resumo curtinho com os 3 menores precos do momento:
+          elif all_results:
+              top3 = sorted(all_results, key=lambda x: x["price"])[:3]
+              lines = [
+                  f"🔎 <b>Verificação das {now_br} concluída</b>",
+                  "❌ Nenhuma passagem de Réveillon até <b>R$ 1.200,00</b> agora.",
+                  "",
+                  "📉 <b>Menores valores encontrados nesta rodada (por pessoa):</b>"
+              ]
+              for i, item in enumerate(top3, 1):
+                  lines.append(
+                      f"{i}º <b>{brl(item['price'])}</b> — {item['city']} (Ida: {item['ida']} | Volta: {item['volta']}) <a href=\"{item['url']}\">🔗 Link</a>"
+                  )
+              send_telegram("\n".join(lines))
+              print("Resumo curto enviado por Telegram.")
           PY
 
       - name: Salvar historico no repositorio
