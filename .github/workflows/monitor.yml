@@ -3,10 +3,10 @@ name: Monitorar página
 on:
   workflow_dispatch:
   schedule:
-    # MADRUGADA (00h às 06h BRT = 03h às 09h UTC): tenta nos minutos 18 e 48 para o GitHub não pular
+    # MADRUGADA (00h às 06h BRT = 03h às 09h UTC): tenta nos minutos 18 e 48 para garantir a execução
     - cron: "18,48 3-9 * * *"
 
-    # DIA E NOITE (de 2 em 2 horas no Brasil): tenta nos minutos 18 e 48 para garantir a execução
+    # DIA E NOITE (de 2 em 2 horas no Brasil): tenta nos minutos 18 e 48
     - cron: "18,48 1,11,13,15,17,19,21,23 * * *"
 
 permissions:
@@ -44,7 +44,7 @@ jobs:
           TELEGRAM_CHAT_ID: ""
         run: python -m app.main --once
 
-      - name: Avisar resultado no Telegram
+      - name: Enviar ofertas ate R$ 1350 e resumo por destino no Telegram
         if: always()
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
@@ -58,7 +58,7 @@ jobs:
           import yaml
           from datetime import datetime, timezone, timedelta
 
-          MAX_PRICE_PER_PERSON = 1200.00
+          MAX_PRICE_PER_PERSON = 1350.00
 
           def brl(value):
               return f"R$ {value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
@@ -137,14 +137,14 @@ jobs:
           br_tz = timezone(timedelta(hours=-3))
           now_br = datetime.now(br_tz).strftime("%d/%m/%Y às %H:%M")
 
-          # 1) Se achou passagem ate R$ 1.200,00 por pessoa, manda o ALERTA COMPLETO COM PRECO NO TOPO:
+          # 1) ALERTA IMEDIATO: Sempre que achar passagem até R$ 1.350,00 por pessoa
           if approved_results:
               approved_results.sort(key=lambda x: x["price"])
               for item in approved_results:
                   card = "\n".join([
                       f"💰 <b>PREÇO: {brl(item['price'])} por pessoa (Ida e Volta)</b>",
-                      f"👥 <b>Total das 4 passagens (2 pessoas): {brl(item['total_couple'])}</b>",
-                      "🎉 <b>ACHOU PASSAGEM DE FIM DE ANO NO SEU ORÇAMENTO!</b>",
+                      f"👥 <b>Total casal (4 passagens): {brl(item['total_couple'])}</b>",
+                      "🎉 <b>OFERTA DE RÉVEILLON DENTRO DO LIMITE DE R$ 1.350!</b>",
                       "",
                       f"📍 <b>Destino:</b> {item['city']} <i>(Saindo de Confins)</i>",
                       f"🛫 <b>Data de IDA:</b> {item['ida']}",
@@ -154,23 +154,34 @@ jobs:
                       f"🔗 <a href=\"{item['url']}\"><b>CLIQUE AQUI PARA ABRIR O SITE NESTA DATA</b></a>"
                   ])
                   send_telegram(card)
-              print(f"Enviados {len(approved_results)} alertas dentro do orcamento.")
 
-          # 2) Se NAO achou nada ate R$ 1.200,00, manda um resumo curtinho com os 3 menores precos do momento:
-          elif all_results:
-              top3 = sorted(all_results, key=lambda x: x["price"])[:3]
+          # 2) ATUALIZAÇÃO DOS 7 DESTINOS: Mostra o menor valor atual de cada cidade
+          if all_results:
+              best_per_city = {}
+              for item in all_results:
+                  c = item["city"]
+                  if c not in best_per_city or item["price"] < best_per_city[c]["price"]:
+                      best_per_city[c] = item
+
+              sorted_cities = sorted(best_per_city.values(), key=lambda x: x["price"])
+
               lines = [
-                  f"🔎 <b>Verificação das {now_br} concluída</b>",
-                  "❌ Nenhuma passagem de Réveillon até <b>R$ 1.200,00</b> agora.",
-                  "",
-                  "📉 <b>Menores valores encontrados nesta rodada (por pessoa):</b>"
+                  f"📊 <b>MENOR PREÇO POR DESTINO ({now_br})</b>",
+                  f"🎯 <i>Sua meta: até R$ 1.350,00 por pessoa</i>",
+                  ""
               ]
-              for i, item in enumerate(top3, 1):
-                  lines.append(
-                      f"{i}º <b>{brl(item['price'])}</b> — {item['city']} (Ida: {item['ida']} | Volta: {item['volta']}) <a href=\"{item['url']}\">🔗 Link</a>"
-                  )
+
+              for i, item in enumerate(sorted_cities, 1):
+                  status = "✅ <b>DENTRO DA META!</b>" if item["price"] <= MAX_PRICE_PER_PERSON else "⏳ Acima da meta"
+                  lines.extend([
+                      f"{i}º 💰 <b>{brl(item['price'])}</b> — <b>{item['city']}</b> ({status})",
+                      f"   🛫 <b>Ida:</b> {item['ida']} | 🛬 <b>Volta:</b> {item['volta']}",
+                      f"   👥 Casal: {brl(item['total_couple'])} — <a href=\"{item['url']}\">🔗 Abrir site</a>",
+                      ""
+                  ])
+
               send_telegram("\n".join(lines))
-              print("Resumo curto enviado por Telegram.")
+              print("Resumo por destino enviado com sucesso.")
           PY
 
       - name: Salvar historico no repositorio
