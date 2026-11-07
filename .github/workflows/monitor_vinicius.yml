@@ -3,7 +3,7 @@ name: "PROMPTER VINICIUS"
 on:
   workflow_dispatch:
   schedule:
-    # Agendamento nos minutos intercalados sugeridos pelo Vinicius (7, 22, 37, 52)
+    # Agendamento nos minutos sugeridos pelo plano do Vinicius (7, 22, 37, 52)
     - cron: "7,22,37,52 * * * *"
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
 
 concurrency:
   group: flight-price-monitor-vinicius
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   vinicius_bot:
@@ -28,10 +28,10 @@ jobs:
           python-version: "3.12"
           cache: "pip"
 
-      - name: Instalar dependencias Python (Playwright Assincrono)
+      - name: Instalar dependencias Python e Chromium
         run: |
           python -m pip install --upgrade pip
-          pip install playwright aiohttp
+          pip install playwright
           python -m playwright install --with-deps chromium
 
       - name: Executar Motor Assincrono (Prompter Vinicius)
@@ -46,243 +46,443 @@ jobs:
           import re
           import urllib.parse
           import urllib.request
-          from datetime import datetime, date, timezone
-          from decimal import Decimal
+          from dataclasses import dataclass, asdict
+          from datetime import datetime, date, timezone, timedelta
+          from decimal import Decimal, InvalidOperation
           from playwright.async_api import async_playwright
 
-          # === CONFIGURACOES EXIGIDAS NO PROMPT ===
-          MAX_CONCURRENT_PAGES = 6
+          # ==================== CONFIGURACOES DO PLANO + AJUSTES ====================
+          MAX_CONCURRENT_PAGES = 8
           MAX_RETRIES = 2
+          MINIMUM_TRIP_DAYS = 4  # Ajustado de 5 para 4 dias conforme solicitado
           CNF_REPOSITIONING_COST_BRL = Decimal("300.00")
           MAX_COMPARABLE_COST_BRL = Decimal("3000.00")
           MIN_ABSOLUTE_DROP_BRL = Decimal("50.00")
           MIN_PERCENT_DROP = Decimal("3.0")
 
-          NORTHEAST_AIRPORTS = ["JPA", "SSA", "IOS", "BPS", "MCZ", "NAT", "FOR", "REC", "AJU", "SLZ", "JJD", "TXF"]
-          IDAS_DATES = ["2026-12-26", "2026-12-27", "2026-12-28", "2026-12-29", "2026-12-30", "2026-12-31"]
-          VOLTAS_DATES = ["2027-01-02", "2027-01-03", "2027-01-04", "2027-01-05", "2027-01-06",
-                          "2027-01-07", "2027-01-08", "2027-01-09", "2027-01-10", "2027-01-11"]
+          NORTHEAST_AIRPORTS = [
+              "JPA", "SSA", "IOS", "BPS", "MCZ", "NAT",
+              "FOR", "REC", "AJU", "SLZ", "JJD", "TXF",
+          ]
 
-          OPEN_JAW_BUS_COSTS = {
-              frozenset(["NAT", "JPA"]): Decimal("180.00"),
-              frozenset(["JPA", "REC"]): Decimal("120.00"),
-              frozenset(["NAT", "REC"]): Decimal("280.00"),
-              frozenset(["REC", "MCZ"]): Decimal("220.00"),
-              frozenset(["JPA", "MCZ"]): Decimal("300.00"),
-              frozenset(["MCZ", "AJU"]): Decimal("240.00"),
-              frozenset(["REC", "AJU"]): Decimal("400.00"),
-              frozenset(["AJU", "SSA"]): Decimal("320.00"),
-              frozenset(["SSA", "IOS"]): Decimal("500.00"),
-              frozenset(["IOS", "BPS"]): Decimal("350.00"),
-              frozenset(["BPS", "TXF"]): Decimal("240.00"),
-              frozenset(["FOR", "JJD"]): Decimal("280.00"),
+          AIRPORT_NAMES = {
+              "JPA": "João Pessoa",
+              "SSA": "Salvador",
+              "IOS": "Ilhéus",
+              "BPS": "Porto Seguro",
+              "MCZ": "Maceió",
+              "NAT": "Natal",
+              "FOR": "Fortaleza",
+              "REC": "Recife",
+              "AJU": "Aracaju",
+              "SLZ": "São Luís",
+              "JJD": "Jericoacoara",
+              "TXF": "Teixeira de Freitas",
           }
 
-          PIX_RE = re.compile(r"Total\s+no\s+Pix[^R\d]{0,30}R\$\s*([\d\.,]+)", re.IGNORECASE)
+          OUTBOUND_DATES = [
+              "2026-12-26", "2026-12-27", "2026-12-28",
+              "2026-12-29", "2026-12-30", "2026-12-31",
+          ]
 
-          def extract_total_pix(text):
-              if not text: return None
+          RETURN_DATES = [
+              "2027-01-02", "2027-01-03", "2027-01-04", "2027-01-05", "2027-01-06",
+              "2027-01-07", "2027-01-08", "2027-01-09", "2027-01-10", "2027-01-11",
+          ]
+
+          OPEN_JAW_BUS_COSTS = {
+              frozenset(("NAT", "JPA")): Decimal("180.00"),
+              frozenset(("JPA", "REC")): Decimal("120.00"),
+              frozenset(("NAT", "REC")): Decimal("280.00"),
+              frozenset(("REC", "MCZ")): Decimal("220.00"),
+              frozenset(("JPA", "MCZ")): Decimal("300.00"),
+              frozenset(("MCZ", "AJU")): Decimal("240.00"),
+              frozenset(("REC", "AJU")): Decimal("400.00"),
+              frozenset(("AJU", "SSA")): Decimal("320.00"),
+              frozenset(("SSA", "IOS")): Decimal("500.00"),
+              frozenset(("IOS", "BPS")): Decimal("350.00"),
+              frozenset(("BPS", "TXF")): Decimal("240.00"),
+              frozenset(("FOR", "JJD")): Decimal("280.00"),
+          }
+
+          PIX_RE = re.compile(
+              r"Total\s+no\s+Pix[^R\d]{0,40}R\$\s*(\d{1,3}(?:\.\d{3})*(?:,\d{2})?|\d+(?:,\d{2})?)",
+              re.IGNORECASE,
+          )
+
+          def parse_brl_decimal(raw_str: str) -> Decimal | None:
+              cleaned = raw_str.strip().replace(".", "").replace(",", ".")
+              try:
+                  val = Decimal(cleaned).quantize(Decimal("0.01"))
+                  return val if val >= Decimal("80.00") else None
+              except (InvalidOperation, ValueError):
+                  return None
+
+          def extract_total_pix(text: str) -> Decimal | None:
+              if not text:
+                  return None
               clean = re.sub(r"<[^>]+>", " ", text)
               matches = PIX_RE.findall(clean)
-              if matches:
-                  val = matches[0].replace(".", "").replace(",", ".")
-                  try:
-                      return Decimal(val)
-                  except:
-                      return None
-              return None
+              valid_prices = []
+              for m in matches:
+                  dec = parse_brl_decimal(m)
+                  if dec is not None:
+                      valid_prices.append(dec)
+              # Seleciona sempre o menor Total no Pix entre todos os cards da pagina
+              return min(valid_prices) if valid_prices else None
 
+          def is_valid_duration(outbound_iso: str, return_iso: str) -> bool:
+              d_out = date.fromisoformat(outbound_iso)
+              d_ret = date.fromisoformat(return_iso)
+              return (d_ret - d_out).days >= MINIMUM_TRIP_DAYS
+
+          def is_allowed_pair(out_dest: str, in_orig: str) -> bool:
+              if out_dest == in_orig:
+                  return True
+              return frozenset((out_dest, in_orig)) in OPEN_JAW_BUS_COSTS
+
+          # ==================== TESTES AUTOMATIZADOS OBRIGATORIOS ====================
+          def run_self_tests():
+              sample_card = """
+              R$ 1.371 No Pix
+              Por adulto e sem taxas
+              2 adultos R$ 3.344
+              Valor das taxas R$ 75
+              Desconto no Pix -R$ 602
+              Total no Pix R$ 2.817
+              """
+              assert extract_total_pix(sample_card) == Decimal("2817.00")
+              assert extract_total_pix(sample_card) != Decimal("1371.00")
+              assert is_valid_duration("2026-12-31", "2027-01-03") is False
+              assert is_valid_duration("2026-12-31", "2027-01-04") is True  # 4 dias valido!
+              assert is_allowed_pair("REC", "REC") is True
+              assert is_allowed_pair("REC", "MCZ") is True
+              assert is_allowed_pair("NAT", "BPS") is False
+              assert is_allowed_pair("SLZ", "FOR") is False
+              print("Todos os testes obrigatorios passaram com sucesso!")
+
+          @dataclass(frozen=True)
           class FlightLeg:
-              def __init__(self, direction, origin, destination, dep_date, url):
-                  self.direction = direction
-                  self.origin = origin
-                  self.destination = destination
-                  self.departure_date = dep_date
-                  self.url = url
+              direction: str
+              origin: str
+              destination: str
+              departure_date: str
+              total_pix_brl: Decimal | None
+              url: str
+              checked_at: str
+              batch_id: str
+              status: str
 
-          async def scrape_leg(context, leg, semaphore):
+          def generate_searches(batch_id: str):
+              outbound_searches = []
+              return_searches = []
+
+              for dest in NORTHEAST_AIRPORTS:
+                  for d in OUTBOUND_DATES:
+                      d_fmt = f"{d[8:10]}-{d[5:7]}-{d[0:4]}"
+                      url = f"https://123milhas.com/v2/busca?de=CNF&para={dest}&adultos=2&criancas=0&bebes=0&ida={d_fmt}&classe=3&is_loyalty=0"
+                      outbound_searches.append(("IDA", "CNF", dest, d, url))
+
+              for orig in NORTHEAST_AIRPORTS:
+                  for d in RETURN_DATES:
+                      d_fmt = f"{d[8:10]}-{d[5:7]}-{d[0:4]}"
+                      url = f"https://123milhas.com/v2/busca?de={orig}&para=CNF&adultos=2&criancas=0&bebes=0&ida={d_fmt}&classe=3&is_loyalty=0"
+                      return_searches.append(("VOLTA", orig, "CNF", d, url))
+
+              all_searches = outbound_searches + return_searches
+              assert len(outbound_searches) == 72
+              assert len(return_searches) == 120
+              assert len(all_searches) == 192
+              assert len(set(s[4] for s in all_searches)) == 192
+              return all_searches
+
+          async def scrape_one(search_tuple, browser_context, semaphore, batch_id: str) -> FlightLeg:
+              direction, orig, dest, dep_date, url = search_tuple
               async with semaphore:
                   for attempt in range(MAX_RETRIES + 1):
-                      page = await context.new_page()
+                      page = await browser_context.new_page()
                       try:
-                          await page.goto(leg.url, timeout=45000, wait_until="domcontentloaded")
-                          await page.wait_for_timeout(5000) # Aguarda renderizacao do React da 123Milhas
-                          
-                          content = await page.content()
-                          total_pix = extract_total_pix(content)
-                          if total_pix: return leg, total_pix, "SUCCESS"
-                          
-                          await page.wait_for_timeout(4000) # Retry local antes de falhar
-                          content = await page.content()
-                          total_pix = extract_total_pix(content)
-                          if total_pix: return leg, total_pix, "SUCCESS"
-                          
-                          return leg, None, "TOTAL_PIX_NOT_FOUND"
-                      except Exception as e:
+                          await page.goto(url, timeout=60000, wait_until="domcontentloaded")
+
+                          # Aguarda ate 25s pela renderizacao real do "Total no Pix" nos cards
+                          found_price = None
+                          no_results = False
+                          for _ in range(25):
+                              await page.wait_for_timeout(1000)
+                              body_text = await page.evaluate("() => document.body ? document.body.innerText : ''")
+                              low_text = body_text.lower()
+                              if "total no pix" in low_text:
+                                  found_price = extract_total_pix(body_text)
+                                  if found_price is not None:
+                                      break
+                              if "nenhum voo encontrado" in low_text or "não encontramos voos" in low_text:
+                                  no_results = True
+                                  break
+
+                          if found_price is None and not no_results:
+                              html_content = await page.content()
+                              found_price = extract_total_pix(html_content)
+
+                          now_iso = datetime.now(timezone.utc).isoformat()
+                          if found_price is not None:
+                              return FlightLeg(direction, orig, dest, dep_date, found_price, url, now_iso, batch_id, "SUCCESS")
+                          if no_results:
+                              return FlightLeg(direction, orig, dest, dep_date, None, url, now_iso, batch_id, "NO_RESULTS")
+
                           if attempt == MAX_RETRIES:
-                              return leg, None, "TIMEOUT_OR_ERROR"
+                              return FlightLeg(direction, orig, dest, dep_date, None, url, now_iso, batch_id, "TOTAL_PIX_NOT_FOUND")
+                          await asyncio.sleep(3 if attempt == 0 else 8)
+                      except Exception:
+                          now_iso = datetime.now(timezone.utc).isoformat()
+                          if attempt == MAX_RETRIES:
+                              return FlightLeg(direction, orig, dest, dep_date, None, url, now_iso, batch_id, "TIMEOUT")
                           await asyncio.sleep(3 if attempt == 0 else 8)
                       finally:
                           await page.close()
 
-          async def run_scraper():
-              searches = []
-              # 1. Gerar 72 Idas
-              for dest in NORTHEAST_AIRPORTS:
-                  for d in IDAS_DATES:
-                      d_fmt = f"{d[8:10]}-{d[5:7]}-{d[0:4]}"
-                      url = f"https://123milhas.com/v2/busca?de=CNF&para={dest}&adultos=2&criancas=0&bebes=0&ida={d_fmt}&classe=3&is_loyalty=0"
-                      searches.append(FlightLeg("IDA", "CNF", dest, d, url))
-              
-              # 2. Gerar 120 Voltas
-              for orig in NORTHEAST_AIRPORTS:
-                  for d in VOLTAS_DATES:
-                      d_fmt = f"{d[8:10]}-{d[5:7]}-{d[0:4]}"
-                      url = f"https://123milhas.com/v2/busca?de={orig}&para=CNF&adultos=2&criancas=0&bebes=0&ida={d_fmt}&classe=3&is_loyalty=0"
-                      searches.append(FlightLeg("VOLTA", orig, "CNF", d, url))
-
+          async def run_batch():
+              run_self_tests()
+              batch_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+              searches = generate_searches(batch_id)
               semaphore = asyncio.Semaphore(MAX_CONCURRENT_PAGES)
+
               async with async_playwright() as p:
                   browser = await p.chromium.launch(headless=True)
-                  context = await browser.new_context(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36")
-                  
-                  print(f"Iniciando varredura paralela de {len(searches)} URLs com {MAX_CONCURRENT_PAGES} workers...")
-                  tasks = [scrape_leg(context, s, semaphore) for s in searches]
-                  results = await asyncio.gather(*tasks)
+                  context = await browser.new_context(
+                      user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36",
+                      viewport={"width": 1280, "height": 900},
+                  )
+                  tasks = [scrape_one(s, context, semaphore, batch_id) for s in searches]
+                  legs = await asyncio.gather(*tasks)
+                  await context.close()
                   await browser.close()
-                  
-              return results
 
-          def combine_and_alert(results):
-              idas = [r for r in results if r[0].direction == "IDA" and r[1] is not None]
-              voltas = [r for r in results if r[0].direction == "VOLTA" and r[1] is not None]
-              
-              valid_trips = []
-              for i_leg, i_price, _ in idas:
-                  for v_leg, v_price, _ in voltas:
-                      # Regra: Minimo 5 dias
-                      d_ida = date.fromisoformat(i_leg.departure_date)
-                      d_volta = date.fromisoformat(v_leg.departure_date)
-                      days = (d_volta - d_ida).days
-                      if days < 5: continue
-                      
-                      # Regra: Aeroportos Permitidos (Convencional ou Open-Jaw)
-                      is_open_jaw = False
-                      bus_cost = None
-                      if i_leg.destination != v_leg.origin:
-                          pair = frozenset([i_leg.destination, v_leg.origin])
-                          if pair in OPEN_JAW_BUS_COSTS:
-                              is_open_jaw = True
-                              bus_cost = OPEN_JAW_BUS_COSTS[pair]
-                          else:
-                              continue # Corta pares proibidos (ex: FOR com NAT)
-                      
-                      # Regra: Custo Comparavel <= 3000
-                      comp_cost = i_price + v_price + CNF_REPOSITIONING_COST_BRL
-                      if comp_cost <= MAX_COMPARABLE_COST_BRL:
-                          trip_key = f"{i_leg.origin}|{i_leg.destination}|{i_leg.departure_date}|{v_leg.origin}|{v_leg.destination}|{v_leg.departure_date}"
-                          valid_trips.append({
-                              "key": trip_key,
-                              "outbound": i_leg, "inbound": v_leg,
-                              "o_price": i_price, "i_price": v_price,
-                              "comp_cost": comp_cost,
-                              "is_open_jaw": is_open_jaw,
-                              "bus_cost": bus_cost,
-                              "days": days
-                          })
-                          
-              # 3. Regra de Deduplicacao (alert_state.json)
-              os.makedirs("data", exist_ok=True)
-              state_file = "data/alert_state.json"
-              state = {"alerts": {}}
-              if os.path.exists(state_file):
-                  with open(state_file, "r") as f:
-                      state = json.load(f)
-                      
-              alerts_to_send = []
-              for t in valid_trips:
-                  k = t["key"]
-                  curr_cost = t["comp_cost"]
-                  send = False
-                  if k not in state["alerts"]:
-                      send = True
-                  else:
-                      last_cost = Decimal(str(state["alerts"][k]["last_cost_brl"]))
-                      diff = last_cost - curr_cost
-                      # So manda de novo se cair R$ 50 ou cair 3%
-                      if diff >= MIN_ABSOLUTE_DROP_BRL or (last_cost > 0 and (diff / last_cost) * 100 >= MIN_PERCENT_DROP):
-                          send = True
-                  
-                  if send:
-                      alerts_to_send.append(t)
-                      state["alerts"][k] = {
-                          "last_cost_brl": float(curr_cost),
-                          "last_sent_at": datetime.now(timezone.utc).isoformat()
-                      }
-                      
-              with open(state_file, "w") as f:
-                  json.dump(state, f, indent=2)
-                  
-              # 4. Envio ao Telegram
-              alerts_to_send.sort(key=lambda x: x["comp_cost"])
-              
+              return batch_id, legs
+
+          def atomic_write_json(path: str, data: dict):
+              os.makedirs(os.path.dirname(path), exist_ok=True)
+              tmp_path = f"{path}.tmp"
+              with open(tmp_path, "w", encoding="utf-8") as f:
+                  json.dump(data, f, indent=2, ensure_ascii=False)
+              os.replace(tmp_path, path)
+
+          def brl(val: Decimal) -> str:
+              return f"R$ {val:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+          def fmt_date_br(iso_str: str) -> str:
+              return f"{iso_str[8:10]}/{iso_str[5:7]}/{iso_str[0:4]}"
+
+          def send_telegram(msg_html: str):
               token = os.environ.get("TELEGRAM_TOKEN", "")
               chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
-              if not token or not chat_id: return
-              
+              if not token or not chat_id:
+                  return
               url_api = f"https://api.telegram.org/bot{token}/sendMessage"
-              
-              def brl(val):
-                  return f"R$ {val:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-                  
-              for t in alerts_to_send:
-                  d_ida = datetime.fromisoformat(t['outbound'].departure_date).strftime('%d/%m/%Y')
-                  d_volta = datetime.fromisoformat(t['inbound'].departure_date).strftime('%d/%m/%Y')
-                  
-                  lines = [
-                      f"🎉 <b>[PROMPTER VINICIUS] OFERTA DENTRO DO TETO</b>\n",
-                      f"💰 <b>Custo comparável: {brl(t['comp_cost'])}</b>",
-                      f"✈️ Voos p/ 2 adultos (c/ taxas): {brl(t['o_price'] + t['i_price'])}",
-                      f"🚌 Reposicionamento até CNF: R$ 300,00\n",
-                      f"🛫 <b>IDA</b>",
-                      f"{t['outbound'].origin} ➔ {t['outbound'].destination}",
-                      f"Data: {d_ida}",
-                      f"Total no Pix: {brl(t['o_price'])}",
-                      f"<a href=\"{t['outbound'].url}\">🔗 Abrir busca de Ida</a>\n",
-                      f"🛬 <b>VOLTA</b>",
-                      f"{t['inbound'].origin} ➔ {t['inbound'].destination}",
-                      f"Data: {d_volta}",
-                      f"Total no Pix: {brl(t['i_price'])}",
-                      f"<a href=\"{t['inbound'].url}\">🔗 Abrir busca de Volta</a>\n"
-                  ]
-                  if t['is_open_jaw']:
-                      lines.extend([
-                          f"🗺️ <b>Open-jaw:</b> Chegada por {t['outbound'].destination} e retorno por {t['inbound'].origin}",
-                          f"🚌 Ônibus estimado p/ 2 pessoas: {brl(t['bus_cost'])}\n"
+              payload = urllib.parse.urlencode({
+                  "chat_id": chat_id,
+                  "text": msg_html,
+                  "parse_mode": "HTML",
+                  "disable_web_page_preview": "true",
+              }).encode("utf-8")
+              req = urllib.request.Request(url_api, data=payload, headers={"User-Agent": "Mozilla/5.0"})
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  response.read()
+
+          def process_results(batch_id: str, legs: list[FlightLeg]):
+              # 1. Salva latest_legs.json atomicamente
+              serializable_legs = []
+              for l in legs:
+                  d = asdict(l)
+                  d["total_pix_brl"] = float(l.total_pix_brl) if l.total_pix_brl is not None else None
+                  serializable_legs.append(d)
+
+              atomic_write_json("data/latest_legs.json", {
+                  "generated_at": datetime.now(timezone.utc).isoformat(),
+                  "batch_id": batch_id,
+                  "expected_searches": 192,
+                  "completed_searches": len(legs),
+                  "legs": serializable_legs,
+              })
+
+              # 2. Metricas da bateria
+              success_legs = [l for l in legs if l.status == "SUCCESS" and l.total_pix_brl is not None]
+              no_res_count = sum(1 for l in legs if l.status in ("NO_RESULTS", "TOTAL_PIX_NOT_FOUND"))
+              err_count = sum(1 for l in legs if l.status not in ("SUCCESS", "NO_RESULTS", "TOTAL_PIX_NOT_FOUND"))
+
+              outbound_ok = [l for l in success_legs if l.direction == "IDA"]
+              inbound_ok = [l for l in success_legs if l.direction == "VOLTA"]
+
+              # 3. Forma todas as combinacoes validas (>= 4 dias e aeroportos permitidos)
+              all_combinations = []
+              for out_leg in outbound_ok:
+                  for in_leg in inbound_ok:
+                      if not is_valid_duration(out_leg.departure_date, in_leg.departure_date):
+                          continue
+                      if not is_allowed_pair(out_leg.destination, in_leg.origin):
+                          continue
+
+                      is_oj = out_leg.destination != in_leg.origin
+                      bus_cost = OPEN_JAW_BUS_COSTS[frozenset((out_leg.destination, in_leg.origin))] if is_oj else None
+                      flights_total = out_leg.total_pix_brl + in_leg.total_pix_brl
+                      comp_cost = flights_total + CNF_REPOSITIONING_COST_BRL
+                      days = (date.fromisoformat(in_leg.departure_date) - date.fromisoformat(out_leg.departure_date)).days
+
+                      trip_key = "|".join([
+                          out_leg.origin, out_leg.destination, out_leg.departure_date,
+                          in_leg.origin, in_leg.destination, in_leg.departure_date,
                       ])
-                  else:
-                      lines.extend([f"📍 Ida e volta pelo mesmo aeroporto: {t['outbound'].destination}\n"])
-                      
-                  lines.append(f"⏱️ <b>Duração:</b> {t['days']} dias")
-                  
-                  msg = "\n".join(lines)
+
+                      all_combinations.append({
+                          "key": trip_key,
+                          "outbound": out_leg,
+                          "inbound": in_leg,
+                          "flights_total": flights_total,
+                          "comp_cost": comp_cost,
+                          "is_open_jaw": is_oj,
+                          "bus_cost": bus_cost,
+                          "days": days,
+                      })
+
+              # 4. Ordenacao deterministica conforme secao 16 do plano
+              all_combinations.sort(key=lambda t: (
+                  t["comp_cost"],
+                  1 if t["is_open_jaw"] else 0,
+                  t["outbound"].departure_date,
+                  t["inbound"].departure_date,
+                  t["outbound"].destination,
+                  t["inbound"].origin,
+              ))
+
+              eligible_trips = [t for t in all_combinations if t["comp_cost"] <= MAX_COMPARABLE_COST_BRL]
+
+              # 5. Estado de deduplicacao
+              state_path = "data/alert_state.json"
+              state = {"alerts": {}}
+              if os.path.exists(state_path):
                   try:
-                      payload = urllib.parse.urlencode({"chat_id": chat_id, "text": msg, "parse_mode": "HTML", "disable_web_page_preview": "true"}).encode("utf-8")
-                      req = urllib.request.Request(url_api, data=payload, headers={"User-Agent": "Mozilla/5.0"})
-                      with urllib.request.urlopen(req, timeout=30) as response:
-                          response.read()
-                  except: pass
+                      with open(state_path, "r", encoding="utf-8") as f:
+                          state = json.load(f)
+                  except Exception:
+                      state = {"alerts": {}}
+
+              alerts_to_send = []
+              for t in eligible_trips:
+                  k = t["key"]
+                  curr = t["comp_cost"]
+                  should_send = False
+                  if k not in state.get("alerts", {}):
+                      should_send = True
+                  else:
+                      last = Decimal(str(state["alerts"][k]["last_cost_brl"]))
+                      diff = last - curr
+                      if diff >= MIN_ABSOLUTE_DROP_BRL or (last > 0 and (diff / last) * Decimal("100") >= MIN_PERCENT_DROP):
+                          should_send = True
+
+                  if should_send:
+                      alerts_to_send.append(t)
+                      state.setdefault("alerts", {})[k] = {
+                          "last_cost_brl": float(curr),
+                          "last_sent_at": datetime.now(timezone.utc).isoformat(),
+                      }
+
+              atomic_write_json(state_path, state)
+
+              now_br = datetime.now(timezone(timedelta(hours=-3))).strftime("%d/%m/%Y às %H:%M")
+
+              # 6. Envia ofertas dentro do teto de R$ 3.000,00 (minimo 4 dias)
+              if alerts_to_send:
+                  for t in alerts_to_send[:8]:
+                      out_c = f"{AIRPORT_NAMES.get(t['outbound'].destination, t['outbound'].destination)} ({t['outbound'].destination})"
+                      in_c = f"{AIRPORT_NAMES.get(t['inbound'].origin, t['inbound'].origin)} ({t['inbound'].origin})"
+                      lines = [
+                          "🎉 <b>[PROMPTER VINICIUS] OFERTA DENTRO DO TETO</b>",
+                          "",
+                          f"💰 <b>Custo comparável: {brl(t['comp_cost'])}</b>",
+                          f"✈️ Voos para 2 adultos, com taxas: {brl(t['flights_total'])}",
+                          f"🚌 Reposicionamento até CNF: {brl(CNF_REPOSITIONING_COST_BRL)}",
+                          "",
+                          "🛫 <b>IDA</b>",
+                          f"CNF ➔ {out_c}",
+                          f"Data: {fmt_date_br(t['outbound'].departure_date)}",
+                          f"Total no Pix: {brl(t['outbound'].total_pix_brl)}",
+                          f"Abrir busca: <a href=\"{t['outbound'].url}\">🔗 Clique aqui (Ida)</a>",
+                          "",
+                          "🛬 <b>VOLTA</b>",
+                          f"{in_c} ➔ CNF",
+                          f"Data: {fmt_date_br(t['inbound'].departure_date)}",
+                          f"Total no Pix: {brl(t['inbound'].total_pix_brl)}",
+                          f"Abrir busca: <a href=\"{t['inbound'].url}\">🔗 Clique aqui (Volta)</a>",
+                          "",
+                      ]
+                      if t["is_open_jaw"]:
+                          lines.extend([
+                              "🗺️ <b>Open-jaw:</b>",
+                              f"Chegada por {AIRPORT_NAMES.get(t['outbound'].destination)} e retorno por {AIRPORT_NAMES.get(t['inbound'].origin)}",
+                              f"Ônibus estimado para 2 pessoas: {brl(t['bus_cost'])}",
+                              "",
+                          ])
+                      else:
+                          lines.extend([
+                              f"📍 Ida e volta pelo mesmo aeroporto: {AIRPORT_NAMES.get(t['outbound'].destination)}",
+                              "",
+                          ])
+                      lines.append(f"⏱️ <b>Duração:</b> {t['days']} dias (mínimo 4 dias)")
+                      send_telegram("\n".join(lines))
+
+              # 7. SE NAO ACHAR NADA ATE R$ 3.000 (ou sem queda nova): avisa e mostra o menor preco encontrado!
+              if not alerts_to_send:
+                  if all_combinations:
+                      best = all_combinations[0]
+                      status_cabecalho = (
+                          "❌ <b>Nenhuma combinação (mín. 4 dias) até R$ 3.000,00 nesta rodada.</b>"
+                          if not eligible_trips
+                          else "ℹ️ <b>Nenhuma queda nova além das ofertas até R$ 3.000,00 já avisadas.</b>"
+                      )
+                      lines = [
+                          f"🔎 <b>[PROMPTER VINICIUS] RELATÓRIO DA RODADA ({now_br})</b>",
+                          status_cabecalho,
+                          f"🎯 <i>Regra: Ida + Volta (2 adultos no Pix c/ taxas) + R$ 300 até CNF ≤ R$ 3.000,00 | Mínimo 4 dias</i>",
+                          "",
+                          f"🏆 <b>MENOR PREÇO ENCONTRADO AGORA: {brl(best['comp_cost'])}</b>",
+                          f"   <i>(Voos: {brl(best['flights_total'])} + R$ 300 até CNF)</i>",
+                          "",
+                          "📉 <b>Top 3 menores combinações desta varredura:</b>",
+                      ]
+                      for idx, t in enumerate(all_combinations[:3], 1):
+                          out_name = AIRPORT_NAMES.get(t["outbound"].destination, t["outbound"].destination)
+                          in_name = AIRPORT_NAMES.get(t["inbound"].origin, t["inbound"].origin)
+                          rota_str = (
+                              f"{out_name} ({t['outbound'].destination})"
+                              if not t["is_open_jaw"]
+                              else f"Ida {out_name} ({t['outbound'].destination}) ➔ Volta {in_name} ({t['inbound'].origin}) [Ônibus: {brl(t['bus_cost'])}]"
+                          )
+                          lines.extend([
+                              f"{idx}º 💰 <b>{brl(t['comp_cost'])}</b> — <b>{rota_str}</b> ({t['days']} dias)",
+                              f"   🛫 Ida {fmt_date_br(t['outbound'].departure_date)[:5]} ({brl(t['outbound'].total_pix_brl)}) <a href=\"{t['outbound'].url}\">🔗 Link Ida</a> | 🛬 Volta {fmt_date_br(t['inbound'].departure_date)[:5]} ({brl(t['inbound'].total_pix_brl)}) <a href=\"{t['inbound'].url}\">🔗 Link Volta</a>",
+                              "",
+                          ])
+                      lines.append(
+                          f"📊 <i>Métricas da bateria: 192 buscas | Sucesso: {len(success_legs)} (Idas: {len(outbound_ok)}, Voltas: {len(inbound_ok)}) | Sem voo: {no_res_count} | Timeout: {err_count}</i>"
+                      )
+                      send_telegram("\n".join(lines))
+                  else:
+                      lines = [
+                          f"🔎 <b>[PROMPTER VINICIUS] RELATÓRIO DA RODADA ({now_br})</b>",
+                          "⚠️ Nenhuma combinação pôde ser formada nesta rodada (a 123Milhas demorou para responder os preços no Pix).",
+                          f"📊 <i>Métricas: 192 buscas | Sucesso: {len(success_legs)} | Sem retorno: {no_res_count + err_count}</i>",
+                      ]
+                      send_telegram("\n".join(lines))
 
           if __name__ == "__main__":
-              res = asyncio.run(run_scraper())
-              combine_and_alert(res)
+              b_id, legs_res = asyncio.run(run_batch())
+              process_results(b_id, legs_res)
           EOF
 
-      - name: Salvar estado dos alertas (Deduplicacao do Vinicius)
+      - name: Salvar estado JSON no repositorio
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/alert_state.json || true
-          git diff --cached --quiet || git commit -m "Atualiza base de alertas do Vinicius"
+          git add data/alert_state.json data/latest_legs.json || true
+          git diff --cached --quiet || git commit -m "Atualiza JSON do Prompter Vinicius"
           git push || true
