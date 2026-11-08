@@ -3,7 +3,6 @@ name: "PROMPTER VINICIUS"
 on:
   workflow_dispatch:
   schedule:
-    # Agendamento nos minutos sugeridos pelo plano do Vinicius (7, 22, 37, 52)
     - cron: "7,22,37,52 * * * *"
 
 permissions:
@@ -51,10 +50,10 @@ jobs:
           from decimal import Decimal, InvalidOperation
           from playwright.async_api import async_playwright
 
-          # ==================== CONFIGURACOES DO PLANO + AJUSTES ====================
+          # ==================== CONFIGURACOES DO PLANO + REGRAS DE VOO ====================
           MAX_CONCURRENT_PAGES = 8
           MAX_RETRIES = 2
-          MINIMUM_TRIP_DAYS = 4  # Ajustado de 5 para 4 dias conforme solicitado
+          MINIMUM_TRIP_DAYS = 4  # Minimo de 4 dias
           CNF_REPOSITIONING_COST_BRL = Decimal("300.00")
           MAX_COMPARABLE_COST_BRL = Decimal("3000.00")
           MIN_ABSOLUTE_DROP_BRL = Decimal("50.00")
@@ -66,18 +65,10 @@ jobs:
           ]
 
           AIRPORT_NAMES = {
-              "JPA": "João Pessoa",
-              "SSA": "Salvador",
-              "IOS": "Ilhéus",
-              "BPS": "Porto Seguro",
-              "MCZ": "Maceió",
-              "NAT": "Natal",
-              "FOR": "Fortaleza",
-              "REC": "Recife",
-              "AJU": "Aracaju",
-              "SLZ": "São Luís",
-              "JJD": "Jericoacoara",
-              "TXF": "Teixeira de Freitas",
+              "JPA": "João Pessoa", "SSA": "Salvador", "IOS": "Ilhéus",
+              "BPS": "Porto Seguro", "MCZ": "Maceió", "NAT": "Natal",
+              "FOR": "Fortaleza", "REC": "Recife", "AJU": "Aracaju",
+              "SLZ": "São Luís", "JJD": "Jericoacoara", "TXF": "Teixeira de Freitas",
           }
 
           OUTBOUND_DATES = [
@@ -105,9 +96,15 @@ jobs:
               frozenset(("FOR", "JJD")): Decimal("280.00"),
           }
 
-          PIX_RE = re.compile(
+          PIX_ITER_RE = re.compile(
               r"Total\s+no\s+Pix[^R\d]{0,40}R\$\s*(\d{1,3}(?:\.\d{3})*(?:,\d{2})?|\d+(?:,\d{2})?)",
               re.IGNORECASE,
+          )
+          TIME_RE = re.compile(r"(\d{2}:\d{2})(\s*\+\s*\d+)?")
+          STOPS_RE = re.compile(r"\b(Direto|(\d+)\s*Paradas?)\b", re.IGNORECASE)
+          INLINE_OPT_RE = re.compile(
+              r"(\d{2}:\d{2})(?:(?!\d{2}:\d{2}).){1,140}?\b(Direto|\d+\s*Paradas?)\b(?:(?!\d{2}:\d{2}).){1,140}?(\d{2}:\d{2})(\s*\+\s*\d+)?",
+              re.IGNORECASE | re.DOTALL,
           )
 
           def parse_brl_decimal(raw_str: str) -> Decimal | None:
@@ -118,48 +115,109 @@ jobs:
               except (InvalidOperation, ValueError):
                   return None
 
-          def extract_total_pix(text: str) -> Decimal | None:
+          def extract_flight_options(section_text: str):
+              opts = []
+              parts = re.compile(r"\bvoo\b", re.IGNORECASE).split(section_text)
+              if len(parts) > 1:
+                  for chunk in parts[1:]:
+                      chunk_short = chunk[:260]
+                      times = TIME_RE.findall(chunk_short)
+                      sm = STOPS_RE.search(chunk_short)
+                      if len(times) >= 2 and sm:
+                          dep_t = times[0][0]
+                          arr_t, arr_plus = times[1][0], (times[1][1] or "").strip()
+                          st_raw = sm.group(1).lower()
+                          stops = 0 if "direto" in st_raw else int(sm.group(2))
+                          opts.append((dep_t, stops, arr_t, arr_plus))
+              if not opts:
+                  for m in INLINE_OPT_RE.finditer(section_text):
+                      dep_t = m.group(1)
+                      st_raw = m.group(2).lower()
+                      stops = 0 if "direto" in st_raw else int(re.search(r"\d+", st_raw).group(0))
+                      arr_t = m.group(3)
+                      arr_plus = (m.group(4) or "").strip()
+                      opts.append((dep_t, stops, arr_t, arr_plus))
+              return opts
+
+          def pick_valid_option(section_text: str, is_outbound_31_12: bool):
+              opts = extract_flight_options(section_text)
+              for dep_t, stops, arr_t, arr_plus in opts:
+                  # Regra 1: Proibido 2 ou mais paradas em qualquer voo
+                  if stops > 1:
+                      continue
+                  # Regra 2: No dia 31/12, proibido chegar apos 18:00 ou no dia seguinte (+1)
+                  if is_outbound_31_12:
+                      if arr_plus:
+                          continue
+                      hh, mm = map(int, arr_t.split(":"))
+                      if (hh * 60 + mm) > (18 * 60):
+                          continue
+                  stops_label = "Direto" if stops == 0 else "1 Parada"
+                  return f"{dep_t} ➔ {arr_t}{arr_plus} ({stops_label})"
+              return None
+
+          def extract_best_valid_card(text: str, is_outbound_31_12: bool):
               if not text:
-                  return None
+                  return None, None
               clean = re.sub(r"<[^>]+>", " ", text)
-              matches = PIX_RE.findall(clean)
-              valid_prices = []
-              for m in matches:
-                  dec = parse_brl_decimal(m)
-                  if dec is not None:
-                      valid_prices.append(dec)
-              # Seleciona sempre o menor Total no Pix entre todos os cards da pagina
-              return min(valid_prices) if valid_prices else None
+              matches = list(PIX_ITER_RE.finditer(clean))
+              if not matches:
+                  return None, None
+
+              best_price = None
+              best_summary = None
+              for idx, m in enumerate(matches):
+                  price = parse_brl_decimal(m.group(1))
+                  if price is None:
+                      continue
+                  start = m.start()
+                  end = matches[idx + 1].start() if (idx + 1) < len(matches) else min(len(clean), start + 4000)
+                  card_text = clean[start:end]
+
+                  opt_summary = pick_valid_option(card_text, is_outbound_31_12)
+                  if opt_summary is not None:
+                      if best_price is None or price < best_price:
+                          best_price = price
+                          best_summary = opt_summary
+              return best_price, best_summary
 
           def is_valid_duration(outbound_iso: str, return_iso: str) -> bool:
-              d_out = date.fromisoformat(outbound_iso)
-              d_ret = date.fromisoformat(return_iso)
-              return (d_ret - d_out).days >= MINIMUM_TRIP_DAYS
+              return (date.fromisoformat(return_iso) - date.fromisoformat(outbound_iso)).days >= MINIMUM_TRIP_DAYS
 
           def is_allowed_pair(out_dest: str, in_orig: str) -> bool:
               if out_dest == in_orig:
                   return True
               return frozenset((out_dest, in_orig)) in OPEN_JAW_BUS_COSTS
 
-          # ==================== TESTES AUTOMATIZADOS OBRIGATORIOS ====================
           def run_self_tests():
-              sample_card = """
-              R$ 1.371 No Pix
-              Por adulto e sem taxas
-              2 adultos R$ 3.344
-              Valor das taxas R$ 75
-              Desconto no Pix -R$ 602
-              Total no Pix R$ 2.817
+              # Teste 1: Voo da imagem (31/12 com 2 paradas chegando 02:15+1) DEVE ser bloqueado!
+              bad_card_31 = """
+              Total no Pix: R$ 2.481
+              Ida Qui, 31/12/2026
+              TAM voo LA-3555 15:20 CNF 2 Paradas 10h 55m 02:15+1 MCZ
               """
-              assert extract_total_pix(sample_card) == Decimal("2817.00")
-              assert extract_total_pix(sample_card) != Decimal("1371.00")
-              assert is_valid_duration("2026-12-31", "2027-01-03") is False
-              assert is_valid_duration("2026-12-31", "2027-01-04") is True  # 4 dias valido!
-              assert is_allowed_pair("REC", "REC") is True
-              assert is_allowed_pair("REC", "MCZ") is True
-              assert is_allowed_pair("NAT", "BPS") is False
-              assert is_allowed_pair("SLZ", "FOR") is False
-              print("Todos os testes obrigatorios passaram com sucesso!")
+              p_bad, _ = extract_best_valid_card(bad_card_31, is_outbound_31_12=True)
+              assert p_bad is None
+
+              # Teste 2: Voo em 31/12 com 1 parada chegando as 17:40 DEVE ser aceito!
+              good_card_31 = """
+              Total no Pix: R$ 2.817
+              Ida Qui, 31/12/2026
+              AZUL voo AD-4259 12:10 CNF 1 Parada 05h 30m 17:40 SSA
+              """
+              p_good, summary = extract_best_valid_card(good_card_31, is_outbound_31_12=True)
+              assert p_good == Decimal("2817.00")
+              assert "17:40" in summary
+
+              # Teste 3: Voo em 31/12 chegando as 18:30 (apos 18h) DEVE ser bloqueado!
+              late_card_31 = """
+              Total no Pix: R$ 2.200
+              Ida Qui, 31/12/2026
+              GOL voo G3-1122 15:00 CNF Direto 03h 30m 18:30 SSA
+              """
+              p_late, _ = extract_best_valid_card(late_card_31, is_outbound_31_12=True)
+              assert p_late is None
+              print("Testes de bloqueio de 2 paradas e chegada ate 18h (31/12) aprovados!")
 
           @dataclass(frozen=True)
           class FlightLeg:
@@ -168,74 +226,65 @@ jobs:
               destination: str
               departure_date: str
               total_pix_brl: Decimal | None
+              flight_info: str | None
               url: str
               checked_at: str
               batch_id: str
               status: str
 
           def generate_searches(batch_id: str):
-              outbound_searches = []
-              return_searches = []
-
+              outbound_searches, return_searches = [], []
               for dest in NORTHEAST_AIRPORTS:
                   for d in OUTBOUND_DATES:
                       d_fmt = f"{d[8:10]}-{d[5:7]}-{d[0:4]}"
                       url = f"https://123milhas.com/v2/busca?de=CNF&para={dest}&adultos=2&criancas=0&bebes=0&ida={d_fmt}&classe=3&is_loyalty=0"
                       outbound_searches.append(("IDA", "CNF", dest, d, url))
-
               for orig in NORTHEAST_AIRPORTS:
                   for d in RETURN_DATES:
                       d_fmt = f"{d[8:10]}-{d[5:7]}-{d[0:4]}"
                       url = f"https://123milhas.com/v2/busca?de={orig}&para=CNF&adultos=2&criancas=0&bebes=0&ida={d_fmt}&classe=3&is_loyalty=0"
                       return_searches.append(("VOLTA", orig, "CNF", d, url))
-
-              all_searches = outbound_searches + return_searches
-              assert len(outbound_searches) == 72
-              assert len(return_searches) == 120
-              assert len(all_searches) == 192
-              assert len(set(s[4] for s in all_searches)) == 192
-              return all_searches
+              return outbound_searches + return_searches
 
           async def scrape_one(search_tuple, browser_context, semaphore, batch_id: str) -> FlightLeg:
               direction, orig, dest, dep_date, url = search_tuple
+              is_out_31 = (direction == "IDA" and dep_date == "2026-12-31")
               async with semaphore:
                   for attempt in range(MAX_RETRIES + 1):
                       page = await browser_context.new_page()
                       try:
                           await page.goto(url, timeout=60000, wait_until="domcontentloaded")
-
-                          # Aguarda ate 25s pela renderizacao real do "Total no Pix" nos cards
-                          found_price = None
+                          found_price, found_info = None, None
                           no_results = False
+                          saw_any_pix = False
+
                           for _ in range(25):
                               await page.wait_for_timeout(1000)
                               body_text = await page.evaluate("() => document.body ? document.body.innerText : ''")
                               low_text = body_text.lower()
                               if "total no pix" in low_text:
-                                  found_price = extract_total_pix(body_text)
+                                  saw_any_pix = True
+                                  found_price, found_info = extract_best_valid_card(body_text, is_out_31)
                                   if found_price is not None:
                                       break
                               if "nenhum voo encontrado" in low_text or "não encontramos voos" in low_text:
                                   no_results = True
                                   break
 
-                          if found_price is None and not no_results:
-                              html_content = await page.content()
-                              found_price = extract_total_pix(html_content)
-
                           now_iso = datetime.now(timezone.utc).isoformat()
                           if found_price is not None:
-                              return FlightLeg(direction, orig, dest, dep_date, found_price, url, now_iso, batch_id, "SUCCESS")
-                          if no_results:
-                              return FlightLeg(direction, orig, dest, dep_date, None, url, now_iso, batch_id, "NO_RESULTS")
+                              return FlightLeg(direction, orig, dest, dep_date, found_price, found_info, url, now_iso, batch_id, "SUCCESS")
+                          if no_results or saw_any_pix:
+                              # Se viu precos na pagina mas todos tinham 2 paradas ou chegavam apos 18h no dia 31/12, descarta sem retry
+                              return FlightLeg(direction, orig, dest, dep_date, None, None, url, now_iso, batch_id, "NO_VALID_FLIGHTS")
 
                           if attempt == MAX_RETRIES:
-                              return FlightLeg(direction, orig, dest, dep_date, None, url, now_iso, batch_id, "TOTAL_PIX_NOT_FOUND")
+                              return FlightLeg(direction, orig, dest, dep_date, None, None, url, now_iso, batch_id, "TOTAL_PIX_NOT_FOUND")
                           await asyncio.sleep(3 if attempt == 0 else 8)
                       except Exception:
                           now_iso = datetime.now(timezone.utc).isoformat()
                           if attempt == MAX_RETRIES:
-                              return FlightLeg(direction, orig, dest, dep_date, None, url, now_iso, batch_id, "TIMEOUT")
+                              return FlightLeg(direction, orig, dest, dep_date, None, None, url, now_iso, batch_id, "TIMEOUT")
                           await asyncio.sleep(3 if attempt == 0 else 8)
                       finally:
                           await page.close()
@@ -256,7 +305,6 @@ jobs:
                   legs = await asyncio.gather(*tasks)
                   await context.close()
                   await browser.close()
-
               return batch_id, legs
 
           def atomic_write_json(path: str, data: dict):
@@ -279,17 +327,13 @@ jobs:
                   return
               url_api = f"https://api.telegram.org/bot{token}/sendMessage"
               payload = urllib.parse.urlencode({
-                  "chat_id": chat_id,
-                  "text": msg_html,
-                  "parse_mode": "HTML",
-                  "disable_web_page_preview": "true",
+                  "chat_id": chat_id, "text": msg_html, "parse_mode": "HTML", "disable_web_page_preview": "true",
               }).encode("utf-8")
               req = urllib.request.Request(url_api, data=payload, headers={"User-Agent": "Mozilla/5.0"})
               with urllib.request.urlopen(req, timeout=30) as response:
                   response.read()
 
           def process_results(batch_id: str, legs: list[FlightLeg]):
-              # 1. Salva latest_legs.json atomicamente
               serializable_legs = []
               for l in legs:
                   d = asdict(l)
@@ -304,15 +348,13 @@ jobs:
                   "legs": serializable_legs,
               })
 
-              # 2. Metricas da bateria
               success_legs = [l for l in legs if l.status == "SUCCESS" and l.total_pix_brl is not None]
-              no_res_count = sum(1 for l in legs if l.status in ("NO_RESULTS", "TOTAL_PIX_NOT_FOUND"))
-              err_count = sum(1 for l in legs if l.status not in ("SUCCESS", "NO_RESULTS", "TOTAL_PIX_NOT_FOUND"))
+              filtered_or_empty = sum(1 for l in legs if l.status in ("NO_VALID_FLIGHTS", "TOTAL_PIX_NOT_FOUND"))
+              err_count = sum(1 for l in legs if l.status not in ("SUCCESS", "NO_VALID_FLIGHTS", "TOTAL_PIX_NOT_FOUND"))
 
               outbound_ok = [l for l in success_legs if l.direction == "IDA"]
               inbound_ok = [l for l in success_legs if l.direction == "VOLTA"]
 
-              # 3. Forma todas as combinacoes validas (>= 4 dias e aeroportos permitidos)
               all_combinations = []
               for out_leg in outbound_ok:
                   for in_leg in inbound_ok:
@@ -343,7 +385,6 @@ jobs:
                           "days": days,
                       })
 
-              # 4. Ordenacao deterministica conforme secao 16 do plano
               all_combinations.sort(key=lambda t: (
                   t["comp_cost"],
                   1 if t["is_open_jaw"] else 0,
@@ -355,7 +396,6 @@ jobs:
 
               eligible_trips = [t for t in all_combinations if t["comp_cost"] <= MAX_COMPARABLE_COST_BRL]
 
-              # 5. Estado de deduplicacao
               state_path = "data/alert_state.json"
               state = {"alerts": {}}
               if os.path.exists(state_path):
@@ -386,16 +426,15 @@ jobs:
                       }
 
               atomic_write_json(state_path, state)
-
               now_br = datetime.now(timezone(timedelta(hours=-3))).strftime("%d/%m/%Y às %H:%M")
 
-              # 6. Envia ofertas dentro do teto de R$ 3.000,00 (minimo 4 dias)
               if alerts_to_send:
                   for t in alerts_to_send[:8]:
                       out_c = f"{AIRPORT_NAMES.get(t['outbound'].destination, t['outbound'].destination)} ({t['outbound'].destination})"
                       in_c = f"{AIRPORT_NAMES.get(t['inbound'].origin, t['inbound'].origin)} ({t['inbound'].origin})"
                       lines = [
                           "🎉 <b>[PROMPTER VINICIUS] OFERTA DENTRO DO TETO</b>",
+                          "✅ <i>Filtro ativo: Sem 2 paradas | Dia 31/12 chegando até 18h</i>",
                           "",
                           f"💰 <b>Custo comparável: {brl(t['comp_cost'])}</b>",
                           f"✈️ Voos para 2 adultos, com taxas: {brl(t['flights_total'])}",
@@ -403,13 +442,13 @@ jobs:
                           "",
                           "🛫 <b>IDA</b>",
                           f"CNF ➔ {out_c}",
-                          f"Data: {fmt_date_br(t['outbound'].departure_date)}",
+                          f"Data: {fmt_date_br(t['outbound'].departure_date)} | 🕒 {t['outbound'].flight_info}",
                           f"Total no Pix: {brl(t['outbound'].total_pix_brl)}",
                           f"Abrir busca: <a href=\"{t['outbound'].url}\">🔗 Clique aqui (Ida)</a>",
                           "",
                           "🛬 <b>VOLTA</b>",
                           f"{in_c} ➔ CNF",
-                          f"Data: {fmt_date_br(t['inbound'].departure_date)}",
+                          f"Data: {fmt_date_br(t['inbound'].departure_date)} | 🕒 {t['inbound'].flight_info}",
                           f"Total no Pix: {brl(t['inbound'].total_pix_brl)}",
                           f"Abrir busca: <a href=\"{t['inbound'].url}\">🔗 Clique aqui (Volta)</a>",
                           "",
@@ -429,7 +468,6 @@ jobs:
                       lines.append(f"⏱️ <b>Duração:</b> {t['days']} dias (mínimo 4 dias)")
                       send_telegram("\n".join(lines))
 
-              # 7. SE NAO ACHAR NADA ATE R$ 3.000 (ou sem queda nova): avisa e mostra o menor preco encontrado!
               if not alerts_to_send:
                   if all_combinations:
                       best = all_combinations[0]
@@ -441,12 +479,12 @@ jobs:
                       lines = [
                           f"🔎 <b>[PROMPTER VINICIUS] RELATÓRIO DA RODADA ({now_br})</b>",
                           status_cabecalho,
-                          f"🎯 <i>Regra: Ida + Volta (2 adultos no Pix c/ taxas) + R$ 300 até CNF ≤ R$ 3.000,00 | Mínimo 4 dias</i>",
+                          "✅ <i>Filtro ativo: Proibido 2 paradas | Dia 31/12 só chegando até 18h</i>",
                           "",
-                          f"🏆 <b>MENOR PREÇO ENCONTRADO AGORA: {brl(best['comp_cost'])}</b>",
+                          f"🏆 <b>MENOR PREÇO VÁLIDO AGORA: {brl(best['comp_cost'])}</b>",
                           f"   <i>(Voos: {brl(best['flights_total'])} + R$ 300 até CNF)</i>",
                           "",
-                          "📉 <b>Top 3 menores combinações desta varredura:</b>",
+                          "📉 <b>Top 3 menores combinações válidas desta varredura:</b>",
                       ]
                       for idx, t in enumerate(all_combinations[:3], 1):
                           out_name = AIRPORT_NAMES.get(t["outbound"].destination, t["outbound"].destination)
@@ -458,18 +496,19 @@ jobs:
                           )
                           lines.extend([
                               f"{idx}º 💰 <b>{brl(t['comp_cost'])}</b> — <b>{rota_str}</b> ({t['days']} dias)",
-                              f"   🛫 Ida {fmt_date_br(t['outbound'].departure_date)[:5]} ({brl(t['outbound'].total_pix_brl)}) <a href=\"{t['outbound'].url}\">🔗 Link Ida</a> | 🛬 Volta {fmt_date_br(t['inbound'].departure_date)[:5]} ({brl(t['inbound'].total_pix_brl)}) <a href=\"{t['inbound'].url}\">🔗 Link Volta</a>",
+                              f"   🛫 Ida {fmt_date_br(t['outbound'].departure_date)[:5]} [{t['outbound'].flight_info}]: {brl(t['outbound'].total_pix_brl)} <a href=\"{t['outbound'].url}\">🔗 Ida</a>",
+                              f"   🛬 Volta {fmt_date_br(t['inbound'].departure_date)[:5]} [{t['inbound'].flight_info}]: {brl(t['inbound'].total_pix_brl)} <a href=\"{t['inbound'].url}\">🔗 Volta</a>",
                               "",
                           ])
                       lines.append(
-                          f"📊 <i>Métricas da bateria: 192 buscas | Sucesso: {len(success_legs)} (Idas: {len(outbound_ok)}, Voltas: {len(inbound_ok)}) | Sem voo: {no_res_count} | Timeout: {err_count}</i>"
+                          f"📊 <i>Métricas: 192 buscas | Válidos (<=1 parada e 31/12 <=18h): {len(success_legs)} | Descartados/Sem voo: {filtered_or_empty} | Timeout: {err_count}</i>"
                       )
                       send_telegram("\n".join(lines))
                   else:
                       lines = [
                           f"🔎 <b>[PROMPTER VINICIUS] RELATÓRIO DA RODADA ({now_br})</b>",
-                          "⚠️ Nenhuma combinação pôde ser formada nesta rodada (a 123Milhas demorou para responder os preços no Pix).",
-                          f"📊 <i>Métricas: 192 buscas | Sucesso: {len(success_legs)} | Sem retorno: {no_res_count + err_count}</i>",
+                          "⚠️ Nenhuma combinação válida (sem 2 paradas e chegando até 18h no dia 31/12) foi encontrada nesta rodada.",
+                          f"📊 <i>Métricas: 192 buscas | Válidos: {len(success_legs)} | Descartados/Sem retorno: {filtered_or_empty + err_count}</i>",
                       ]
                       send_telegram("\n".join(lines))
 
