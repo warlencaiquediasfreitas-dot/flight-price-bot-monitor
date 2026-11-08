@@ -3,7 +3,6 @@ name: Monitorar Folga e Cidades Proximas
 on:
   workflow_dispatch:
   schedule:
-    # Dispara a cada 20 minutos em paralelo ao robo principal
     - cron: "*/20 * * * *"
 
 permissions:
@@ -15,7 +14,7 @@ concurrency:
 
 jobs:
   # =========================================================================
-  # MENSAGEM 2: VIAGEM ESTENDIDA (IDA 29 A 31/12 | VOLTA 07, 08, 09, 10 E 11/01)
+  # MENSAGEM 2: VIAGEM ESTENDIDA (IDA 29 A 31/12 | VOLTA 07 A 11/01)
   # =========================================================================
   mensagem_2_folga:
     name: "Mensagem 2 - Voltas 07 a 11 de Janeiro"
@@ -39,7 +38,7 @@ jobs:
       - name: Instalar navegador do Playwright
         run: python -m playwright install --with-deps chromium
 
-      - name: Preparar filtro Total no Pix e datas de 07/01 a 11/01
+      - name: Preparar filtro (Sem 2 paradas e chegada ate 18h no dia 31/12)
         run: |
           python - <<'PY'
           import os
@@ -49,18 +48,67 @@ jobs:
           if os.path.exists("data/flight_prices.sqlite3"):
               os.remove("data/flight_prices.sqlite3")
 
-          # 1. Filtro para ler exclusivamente "Total no Pix: R$ ..."
           code = '''import re
 
           _orig_compile = re.compile
           _orig_findall = re.findall
           _orig_finditer = re.finditer
 
-          _PIX_RE = _orig_compile(
-              r"Total\\s+no\\s+Pix[^R\\d]{0,30}R\\$\\s*\\d[\\d\\.,]*",
+          _TAG_RE = _orig_compile(r"<[^>]+>")
+          _PIX_ITER_RE = _orig_compile(
+              r"Total\\s+no\\s+Pix[^R\\d]{0,40}R\\$\\s*(?:\\d{1,3}(?:\\.\\d{3})*(?:,\\d{2})?|\\d+(?:,\\d{2})?)",
               re.IGNORECASE
           )
-          _TAG_RE = _orig_compile(r"<[^>]+>")
+          _VOLTA_SPLIT_RE = _orig_compile(
+              r"\\bVolta\\b\\s*(?:Seg|Ter|Qua|Qui|Sex|S[áa]b|Dom|\\d{2}/\\d{2})",
+              re.IGNORECASE
+          )
+          _TIME_RE = _orig_compile(r"(\\d{2}:\\d{2})(\\s*\\+\\s*\\d+)?")
+          _STOPS_RE = _orig_compile(r"\\b(Direto|(\\d+)\\s*Paradas?)\\b", re.IGNORECASE)
+          _INLINE_OPT_RE = _orig_compile(
+              r"(\\d{2}:\\d{2})(?:(?!\\d{2}:\\d{2}).){1,140}?\\b(Direto|\\d+\\s*Paradas?)\\b(?:(?!\\d{2}:\\d{2}).){1,140}?(\\d{2}:\\d{2})(\\s*\\+\\s*\\d+)?",
+              re.IGNORECASE | re.DOTALL
+          )
+
+          def _extract_options(section_text):
+              opts = []
+              parts = _orig_compile(r"\\bvoo\\b", re.IGNORECASE).split(section_text)
+              if len(parts) > 1:
+                  for chunk in parts[1:]:
+                      chunk_short = chunk[:260]
+                      times = _TIME_RE.findall(chunk_short)
+                      sm = _STOPS_RE.search(chunk_short)
+                      if len(times) >= 2 and sm:
+                          dep_t = times[0][0]
+                          arr_t, arr_plus = times[1][0], (times[1][1] or "").strip()
+                          st_raw = sm.group(1).lower()
+                          stops = 0 if "direto" in st_raw else int(sm.group(2))
+                          opts.append((dep_t, stops, arr_t, arr_plus))
+              if not opts:
+                  for m in _INLINE_OPT_RE.finditer(section_text):
+                      dep_t = m.group(1)
+                      st_raw = m.group(2).lower()
+                      stops = 0 if "direto" in st_raw else int(_orig_compile(r"\\d+").search(st_raw).group(0))
+                      arr_t = m.group(3)
+                      arr_plus = (m.group(4) or "").strip()
+                      opts.append((dep_t, stops, arr_t, arr_plus))
+              return opts
+
+          def _has_valid_option(section_text, is_outbound_31_12):
+              opts = _extract_options(section_text)
+              if not opts:
+                  return False
+              for dep_t, stops, arr_t, arr_plus in opts:
+                  if stops > 1:
+                      continue
+                  if is_outbound_31_12:
+                      if arr_plus:
+                          continue
+                      hh, mm = map(int, arr_t.split(":"))
+                      if (hh * 60 + mm) > (18 * 60):
+                          continue
+                  return True
+              return False
 
           def _filter_total_pix(text):
               if not isinstance(text, str):
@@ -68,10 +116,34 @@ jobs:
               if "total no pix" not in text.lower():
                   return text
               clean = _TAG_RE.sub(" ", text)
-              matches = _PIX_RE.findall(clean)
-              if matches:
-                  return " | ".join(matches)
-              return text
+              matches = list(_PIX_ITER_RE.finditer(clean))
+              if not matches:
+                  return ""
+
+              header_text = clean[:matches[0].start()]
+              page_is_31_12 = bool(_orig_compile(r"31/12/2026|31\\s+dez", re.IGNORECASE).search(header_text))
+
+              valid_pix_strings = []
+              for idx, m in enumerate(matches):
+                  start = m.start()
+                  end = matches[idx + 1].start() if (idx + 1) < len(matches) else min(len(clean), start + 4500)
+                  card_text = clean[start:end]
+
+                  v_split = _VOLTA_SPLIT_RE.search(card_text)
+                  if v_split:
+                      ida_sec = card_text[:v_split.start()]
+                      volta_sec = card_text[v_split.start():]
+                      is_31 = page_is_31_12 or bool(_orig_compile(r"31/12/2026|31\\s+dez", re.IGNORECASE).search(ida_sec[:180]))
+                      if _has_valid_option(ida_sec, is_31) and _has_valid_option(volta_sec, False):
+                          valid_pix_strings.append(m.group(0))
+                  else:
+                      is_31 = page_is_31_12 or bool(_orig_compile(r"31/12/2026|31\\s+dez", re.IGNORECASE).search(card_text[:180]))
+                      if _has_valid_option(card_text, is_31):
+                          valid_pix_strings.append(m.group(0))
+
+              if valid_pix_strings:
+                  return " | ".join(valid_pix_strings)
+              return ""
 
           class _PatternProxy:
               def __init__(self, pat):
@@ -105,7 +177,6 @@ jobs:
           with open("sitecustomize.py", "w", encoding="utf-8") as f:
               f.write(code)
 
-          # 2. Gera config temporario na maquina virtual (sem alterar o repositorio)
           cities = [
               ("João Pessoa (JPA)", "JPA"),
               ("Salvador (SSA)", "SSA"),
@@ -149,7 +220,6 @@ jobs:
           }
           with open("config.yaml", "w", encoding="utf-8") as f:
               yaml.safe_dump(cfg, f, allow_unicode=True, sort_keys=False)
-          print(f"Configuradas {len(monitors)} combinacoes para voltas de 07/01 a 11/01.")
           PY
 
       - name: Pesquisar voltas 07 a 11/01 e enviar 2a Mensagem no Telegram
@@ -159,6 +229,16 @@ jobs:
           SANDBOX_TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           for CICLO in 1 2; do
+            python - <<'PY'
+          import os, sqlite3
+          db_path = "data/flight_prices.sqlite3"
+          if os.path.exists(db_path):
+              con = sqlite3.connect(db_path)
+              con.execute("DELETE FROM price_checks")
+              con.commit()
+              con.close()
+          PY
+
             TELEGRAM_TOKEN="" TELEGRAM_CHAT_ID="" python -m app.main --once || true
 
             TELEGRAM_TOKEN="$SANDBOX_TELEGRAM_TOKEN" TELEGRAM_CHAT_ID="$SANDBOX_TELEGRAM_CHAT_ID" python - <<'PY'
@@ -222,20 +302,19 @@ jobs:
 
           def dica_folga(volta_str):
               if volta_str.startswith("07/01"):
-                  return "⏰ <i>Volta 07/01: Chegando cedo em CNF dá tempo de estar em Divinópolis às 12h (ou tire 1 dia de folga)</i>"
+                  return "⏰ <i>Volta 07/01: Chegando cedo em CNF dá tempo de estar em Divinópolis às 12h</i>"
               if volta_str.startswith("11/01"):
-                  return "🌙 <i>Volta 11/01: Confira se o voo sai de madrugada para chegar em Divinópolis até 12h (usando 2 dias de folga)</i>"
+                  return "🌙 <i>Volta 11/01: Confira se sai de madrugada para chegar em Divinópolis até 12h</i>"
               return "🏖️ <i>Aproveita os 2 dias de folga (07 e 08/01) + fim de semana!</i>"
 
           now_br = datetime.now(timezone(timedelta(hours=-3))).strftime("%d/%m/%Y às %H:%M")
 
-          # 1) Alerta individual se achar voo ate R$ 2.500 voltando entre 07/01 e 11/01
           if approved_results:
               approved_results.sort(key=lambda x: x["total_pix"])
               for item in approved_results[:5]:
                   card = "\n".join([
                       f"🌴 <b>[2ª MENSAGEM - OPÇÃO COM FOLGA] TOTAL PIX: {brl(item['total_pix'])}</b>",
-                      "✅ <i>Valor final para 2 adultos (Ida e Volta + taxas)</i>",
+                      "✅ <i>2 adultos c/ taxas | Sem 2 paradas | Dia 31/12 chegando até 18h</i>",
                       dica_folga(item["volta"]),
                       "",
                       f"📍 <b>Destino:</b> {item['city']} <i>(Saindo de Confins)</i>",
@@ -246,7 +325,6 @@ jobs:
                   ])
                   send_telegram(card)
 
-          # 2) Resumo comparativo (Voltas 07, 08, 09, 10 ou 11/01)
           if all_results:
               best_overall, best_29_30, best_31 = {}, {}, {}
               for item in all_results:
@@ -263,8 +341,7 @@ jobs:
               sorted_cities = sorted(best_overall.keys(), key=lambda c: best_overall[c]["total_pix"])
               lines = [
                   f"🗓️ <b>[2ª MENSAGEM] VIAGEM MAIS LONGA / FOLGA ({now_br})</b>",
-                  "✈️ <i>Idas: 29, 30 ou 31/12 | Voltas: 07, 08, 09, 10 ou 11/01/2027</i>",
-                  "💼 <i>Ideal para usar os 2 dias de folga (07 e 08/01) e voltar até seg (11/01 cedo)</i>",
+                  "✈️ <i>Idas: 29 a 31/12 (31/12 só até 18h) | Voltas: 07 a 11/01 | Sem 2 paradas</i>",
                   f"🎯 <i>Teto máximo: até {brl(MAX_TOTAL_PIX_BRL)} (Total Pix 2 adultos)</i>",
                   ""
               ]
@@ -273,16 +350,14 @@ jobs:
                   if c in best_29_30:
                       b = best_29_30[c]
                       st = "✅ <b>NO TETO!</b>" if b["total_pix"] <= MAX_TOTAL_PIX_BRL else "⏳ Acima"
-                      nota_11 = " ⚠️<i>(ver horário madrugada)</i>" if b["volta"].startswith("11/01") else ""
                       lines.append(
-                          f"   🌟 <b>Ida {b['ida'][:5]} ➔ Volta {b['volta'][:5]}:</b> {brl(b['total_pix'])} ({st}){nota_11} — <a href=\"{b['url']}\">🔗 Abrir</a>"
+                          f"   🌟 <b>Ida {b['ida'][:5]} ➔ Volta {b['volta'][:5]}:</b> {brl(b['total_pix'])} ({st}) — <a href=\"{b['url']}\">🔗 Abrir</a>"
                       )
                   if c in best_31:
                       o = best_31[c]
                       st = "✅ <b>NO TETO!</b>" if o["total_pix"] <= MAX_TOTAL_PIX_BRL else "⏳ Acima"
-                      nota_11 = " ⚠️<i>(ver horário madrugada)</i>" if o["volta"].startswith("11/01") else ""
                       lines.append(
-                          f"   🥂 <b>Ida 31/12 ➔ Volta {o['volta'][:5]}:</b> {brl(o['total_pix'])} ({st}){nota_11} — <a href=\"{o['url']}\">🔗 Abrir</a>"
+                          f"   🥂 <b>Ida 31/12 (até 18h) ➔ Volta {o['volta'][:5]}:</b> {brl(o['total_pix'])} ({st}) — <a href=\"{o['url']}\">🔗 Abrir</a>"
                       )
                   lines.append("")
               send_telegram("\n".join(lines))
@@ -318,7 +393,7 @@ jobs:
       - name: Instalar navegador do Playwright
         run: python -m playwright install --with-deps chromium
 
-      - name: Preparar busca de trechos separados (Cidades Proximas)
+      - name: Preparar busca de trechos separados (Sem 2 paradas e 31/12 ate 18h)
         run: |
           python - <<'PY'
           import os
@@ -334,11 +409,57 @@ jobs:
           _orig_findall = re.findall
           _orig_finditer = re.finditer
 
-          _PIX_RE = _orig_compile(
-              r"Total\\s+no\\s+Pix[^R\\d]{0,30}R\\$\\s*\\d[\\d\\.,]*",
+          _TAG_RE = _orig_compile(r"<[^>]+>")
+          _PIX_ITER_RE = _orig_compile(
+              r"Total\\s+no\\s+Pix[^R\\d]{0,40}R\\$\\s*(?:\\d{1,3}(?:\\.\\d{3})*(?:,\\d{2})?|\\d+(?:,\\d{2})?)",
               re.IGNORECASE
           )
-          _TAG_RE = _orig_compile(r"<[^>]+>")
+          _TIME_RE = _orig_compile(r"(\\d{2}:\\d{2})(\\s*\\+\\s*\\d+)?")
+          _STOPS_RE = _orig_compile(r"\\b(Direto|(\\d+)\\s*Paradas?)\\b", re.IGNORECASE)
+          _INLINE_OPT_RE = _orig_compile(
+              r"(\\d{2}:\\d{2})(?:(?!\\d{2}:\\d{2}).){1,140}?\\b(Direto|\\d+\\s*Paradas?)\\b(?:(?!\\d{2}:\\d{2}).){1,140}?(\\d{2}:\\d{2})(\\s*\\+\\s*\\d+)?",
+              re.IGNORECASE | re.DOTALL
+          )
+
+          def _extract_options(section_text):
+              opts = []
+              parts = _orig_compile(r"\\bvoo\\b", re.IGNORECASE).split(section_text)
+              if len(parts) > 1:
+                  for chunk in parts[1:]:
+                      chunk_short = chunk[:260]
+                      times = _TIME_RE.findall(chunk_short)
+                      sm = _STOPS_RE.search(chunk_short)
+                      if len(times) >= 2 and sm:
+                          dep_t = times[0][0]
+                          arr_t, arr_plus = times[1][0], (times[1][1] or "").strip()
+                          st_raw = sm.group(1).lower()
+                          stops = 0 if "direto" in st_raw else int(sm.group(2))
+                          opts.append((dep_t, stops, arr_t, arr_plus))
+              if not opts:
+                  for m in _INLINE_OPT_RE.finditer(section_text):
+                      dep_t = m.group(1)
+                      st_raw = m.group(2).lower()
+                      stops = 0 if "direto" in st_raw else int(_orig_compile(r"\\d+").search(st_raw).group(0))
+                      arr_t = m.group(3)
+                      arr_plus = (m.group(4) or "").strip()
+                      opts.append((dep_t, stops, arr_t, arr_plus))
+              return opts
+
+          def _has_valid_option(section_text, is_outbound_31_12):
+              opts = _extract_options(section_text)
+              if not opts:
+                  return False
+              for dep_t, stops, arr_t, arr_plus in opts:
+                  if stops > 1:
+                      continue
+                  if is_outbound_31_12:
+                      if arr_plus:
+                          continue
+                      hh, mm = map(int, arr_t.split(":"))
+                      if (hh * 60 + mm) > (18 * 60):
+                          continue
+                  return True
+              return False
 
           def _filter_total_pix(text):
               if not isinstance(text, str):
@@ -346,10 +467,25 @@ jobs:
               if "total no pix" not in text.lower():
                   return text
               clean = _TAG_RE.sub(" ", text)
-              matches = _PIX_RE.findall(clean)
-              if matches:
-                  return " | ".join(matches)
-              return text
+              matches = list(_PIX_ITER_RE.finditer(clean))
+              if not matches:
+                  return ""
+
+              header_text = clean[:matches[0].start()]
+              page_is_31_12 = bool(_orig_compile(r"31/12/2026|31\\s+dez", re.IGNORECASE).search(header_text))
+
+              valid_pix_strings = []
+              for idx, m in enumerate(matches):
+                  start = m.start()
+                  end = matches[idx + 1].start() if (idx + 1) < len(matches) else min(len(clean), start + 4500)
+                  card_text = clean[start:end]
+                  is_31 = page_is_31_12 or bool(_orig_compile(r"31/12/2026|31\\s+dez", re.IGNORECASE).search(card_text[:180]))
+                  if _has_valid_option(card_text, is_31):
+                      valid_pix_strings.append(m.group(0))
+
+              if valid_pix_strings:
+                  return " | ".join(valid_pix_strings)
+              return ""
 
           class _PatternProxy:
               def __init__(self, pat):
@@ -383,13 +519,11 @@ jobs:
           with open("sitecustomize.py", "w", encoding="utf-8") as f:
               f.write(code)
 
-          # Aeroportos que formam corredores turisticos proximos (incluindo Recife como apoio)
           airports = ["REC", "JPA", "NAT", "MCZ", "SSA", "IOS", "BPS"]
           idas = ["29-12-2026", "30-12-2026", "31-12-2026"]
           voltas = ["06-01-2027", "07-01-2027", "08-01-2027", "09-01-2027", "10-01-2027", "11-01-2027"]
 
           monitors = []
-          # Trechos de IDA (Confins -> Destino)
           for iata in airports:
               for d in idas:
                   d_br = d.replace("-", "/")
@@ -404,7 +538,6 @@ jobs:
                       "alert_when_price_below_max": True,
                   })
 
-          # Trechos de VOLTA (Destino -> Confins)
           for iata in airports:
               for d in voltas:
                   d_br = d.replace("-", "/")
@@ -433,7 +566,6 @@ jobs:
           }
           with open("config.yaml", "w", encoding="utf-8") as f:
               yaml.safe_dump(cfg, f, allow_unicode=True, sort_keys=False)
-          print(f"Configurados {len(monitors)} trechos individuais para cruzar cidades proximas.")
           PY
 
       - name: Cruzar Cidades Proximas e enviar 3a Mensagem no Telegram
@@ -443,6 +575,16 @@ jobs:
           SANDBOX_TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           for CICLO in 1 2; do
+            python - <<'PY'
+          import os, sqlite3
+          db_path = "data/flight_prices.sqlite3"
+          if os.path.exists(db_path):
+              con = sqlite3.connect(db_path)
+              con.execute("DELETE FROM price_checks")
+              con.commit()
+              con.close()
+          PY
+
             TELEGRAM_TOKEN="" TELEGRAM_CHAT_ID="" python -m app.main --once || true
 
             TELEGRAM_TOKEN="$SANDBOX_TELEGRAM_TOKEN" TELEGRAM_CHAT_ID="$SANDBOX_TELEGRAM_CHAT_ID" python - <<'PY'
@@ -471,9 +613,7 @@ jobs:
               WHERE id IN (SELECT MAX(id) FROM price_checks GROUP BY monitor_name)
           """).fetchall()
 
-          idas_map = {}
-          voltas_map = {}
-
+          idas_map, voltas_map = {}, {}
           for row in rows:
               name = row["monitor_name"]
               if name in active_monitors and row["min_price_brl"] is not None:
@@ -488,18 +628,12 @@ jobs:
                           voltas_map.setdefault(iata, []).append(entry)
 
           NAMES = {
-              "REC": "Recife",
-              "JPA": "João Pessoa",
-              "NAT": "Natal",
-              "MCZ": "Maceió",
-              "SSA": "Salvador",
-              "IOS": "Ilhéus",
-              "BPS": "Porto Seguro",
+              "REC": "Recife", "JPA": "João Pessoa", "NAT": "Natal",
+              "MCZ": "Maceió", "SSA": "Salvador", "IOS": "Ilhéus", "BPS": "Porto Seguro",
           }
 
-          # Pares de cidades proximas que valem a pena combinar na mesma viagem
           NEARBY_ROUTES = [
-              ("REC", "JPA", "120 km (~1h30 BR-101) • Dá para curtir Litoral Sul/Pitimbu + João Pessoa"),
+              ("REC", "JPA", "120 km (~1h30 BR-101) • Litoral Sul/Pitimbu + João Pessoa"),
               ("JPA", "REC", "120 km (~1h30 BR-101) • Chega por João Pessoa e volta por Recife"),
               ("JPA", "NAT", "185 km (~2h15) • Roteiro João Pessoa + Praia da Pipa + Natal"),
               ("NAT", "JPA", "185 km (~2h15) • Roteiro Natal + Praia da Pipa + João Pessoa"),
@@ -508,7 +642,7 @@ jobs:
               ("REC", "NAT", "290 km (~3h30) • Roteiro passando por João Pessoa e Pipa até Natal"),
               ("NAT", "REC", "290 km (~3h30) • Roteiro descendo de Natal e Pipa até Recife"),
               ("SSA", "IOS", "Rota das Ilhas e Cacau • Salvador + Morro de São Paulo + Boipeba + Itacaré + Ilhéus"),
-              ("IOS", "SSA", "Rota do Cacau e Ilhas • Chega em Ilhéus/Itacaré + Morro de São Paulo + volta por Salvador"),
+              ("IOS", "SSA", "Rota do Cacau e Ilhas • Ilhéus/Itacaré + Morro de São Paulo + volta por Salvador"),
               ("IOS", "BPS", "300 km • Costa do Cacau e Descobrimento (Ilhéus + Arraial d'Ajuda/Trancoso + Porto Seguro)"),
               ("BPS", "IOS", "300 km • Chega em Porto Seguro/Trancoso e sobe até Ilhéus/Itacaré"),
           ]
@@ -549,13 +683,13 @@ jobs:
 
           now_br = datetime.now(timezone(timedelta(hours=-3))).strftime("%d/%m/%Y às %H:%M")
 
-          # 1) Alerta de oportunidade se a soma (Ida Cidade A + Volta Cidade B) ficar ate R$ 2.500
           approved = [c for c in combos if c["total_pix"] <= MAX_TOTAL_PIX_BRL]
           if approved:
               approved.sort(key=lambda x: x["total_pix"])
               for c in approved[:4]:
                   card = "\n".join([
                       f"🗺️ <b>[3ª MENSAGEM - OFERTA 2 CIDADES] TOTAL PIX: {brl(c['total_pix'])}</b>",
+                      "✅ <i>Sem voos com 2 paradas | Dia 31/12 só chegando até 18h</i>",
                       f"📍 <b>{c['title']}</b>",
                       f"🚗 <i>{c['desc']}</i>",
                       "",
@@ -565,7 +699,6 @@ jobs:
                   ])
                   send_telegram(card)
 
-          # 2) Ranking com a melhor combinacao de cada rota de cidades vizinhas
           best_per_route = {}
           for c in combos:
               k = c["pair_key"]
@@ -573,14 +706,12 @@ jobs:
                   best_per_route[k] = c
 
           sorted_routes = sorted(best_per_route.values(), key=lambda x: x["total_pix"])
-
           lines = [
               f"🗺️ <b>[3ª MENSAGEM] ROTEIRO 2 CIDADES PRÓXIMAS ({now_br})</b>",
-              "💡 <i>Chegando por um aeroporto e voltando por outro próximo (Total Pix p/ 2 adultos c/ taxas)</i>",
+              "💡 <i>Total Pix 2 adultos | Sem 2 paradas | Dia 31/12 só chegando até 18h</i>",
               f"🎯 <i>Meta combinada (Ida + Volta): até {brl(MAX_TOTAL_PIX_BRL)}</i>",
               ""
           ]
-
           for i, c in enumerate(sorted_routes[:8], 1):
               st = "✅ <b>DENTRO DO TETO!</b>" if c["total_pix"] <= MAX_TOTAL_PIX_BRL else "⏳ Acima"
               lines.extend([
@@ -590,7 +721,6 @@ jobs:
                   f"   🛫 Ida {c['ida_date'][:5]} ({brl(c['ida_price'])}) <a href=\"{c['ida_url']}\">🔗 Link Ida</a> | 🛬 Volta {c['volta_date'][:5]} ({brl(c['volta_price'])}) <a href=\"{c['volta_url']}\">🔗 Link Volta</a>",
                   ""
               ])
-
           send_telegram("\n".join(lines))
           PY
 
