@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-16T02:48:40.874082+00:00",
-  "batch_id": "20261116T021512Z",
+  "generated_at": "2026-11-16T10:29:36.738885+00:00",
+  "batch_id": "20261116T095412Z",
   "expected_searches": 192,
   "completed_searches": 192,
   "legs": [
@@ -12,8 +12,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=JPA&adultos=2&criancas=0&bebes=0&ida=26-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:16:46.992669+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:55:49.613155+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -24,8 +24,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=JPA&adultos=2&criancas=0&bebes=0&ida=27-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:16:46.294574+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:55:49.704784+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -36,8 +36,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=JPA&adultos=2&criancas=0&bebes=0&ida=28-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:16:47.622021+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:55:47.779935+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -45,24 +45,24 @@
       "origin": "CNF",
       "destination": "JPA",
       "departure_date": "2026-12-29",
-      "total_pix_brl": null,
-      "flight_info": null,
+      "total_pix_brl": 3139.0,
+      "flight_info": "16:40 ➔ 02:30 (1 Parada)",
       "url": "https://123milhas.com/v2/busca?de=CNF&para=JPA&adultos=2&criancas=0&bebes=0&ida=29-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:16:47.678561+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "TOTAL_PIX_NOT_FOUND"
+      "checked_at": "2026-11-16T09:54:27.961628+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "SUCCESS"
     },
     {
       "direction": "IDA",
       "origin": "CNF",
       "destination": "JPA",
       "departure_date": "2026-12-30",
-      "total_pix_brl": null,
-      "flight_info": null,
+      "total_pix_brl": 3146.0,
+      "flight_info": "11:05 ➔ 17:00 (1 Parada)",
       "url": "https://123milhas.com/v2/busca?de=CNF&para=JPA&adultos=2&criancas=0&bebes=0&ida=30-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:16:47.545504+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "TOTAL_PIX_NOT_FOUND"
+      "checked_at": "2026-11-16T09:54:28.301919+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "SUCCESS"
     },
     {
       "direction": "IDA",
@@ -72,8 +72,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=JPA&adultos=2&criancas=0&bebes=0&ida=31-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:16:45.224230+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:55:50.115347+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -81,12 +81,12 @@
       "origin": "CNF",
       "destination": "SSA",
       "departure_date": "2026-12-26",
-      "total_pix_brl": null,
-      "flight_info": null,
+      "total_pix_brl": 3081.0,
+      "flight_info": "10:55 ➔ 16:45 (1 Parada)",
       "url": "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=26-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:16:45.292729+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "TOTAL_PIX_NOT_FOUND"
+      "checked_at": "2026-11-16T09:54:31.383475+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "SUCCESS"
     },
     {
       "direction": "IDA",
@@ -96,8 +96,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=27-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:16:47.171569+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:55:47.108865+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -105,47 +105,47 @@
       "origin": "CNF",
       "destination": "SSA",
       "departure_date": "2026-12-28",
-      "total_pix_brl": 2325.0,
-      "flight_info": "09:50 ➔ 15:45 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=28-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:16:57.975077+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T09:55:56.966260+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "IDA",
       "origin": "CNF",
       "destination": "SSA",
       "departure_date": "2026-12-29",
-      "total_pix_brl": 2325.0,
-      "flight_info": "06:25 ➔ 12:25 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=29-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:16:54.279899+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T09:55:57.269728+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "IDA",
       "origin": "CNF",
       "destination": "SSA",
       "departure_date": "2026-12-30",
-      "total_pix_brl": 2325.0,
-      "flight_info": "16:40 ➔ 01:10 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=30-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:17:04.419369+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T09:55:59.834181+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "IDA",
       "origin": "CNF",
       "destination": "SSA",
       "departure_date": "2026-12-31",
-      "total_pix_brl": 1091.0,
+      "total_pix_brl": 1379.0,
       "flight_info": "17:00 ➔ 01:30 (1 Parada)",
       "url": "https://123milhas.com/v2/busca?de=CNF&para=SSA&adultos=2&criancas=0&bebes=0&ida=31-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:17:56.900303+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:56:10.201131+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "SUCCESS"
     },
     {
@@ -156,8 +156,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=IOS&adultos=2&criancas=0&bebes=0&ida=26-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:18:16.806844+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:57:16.153172+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -168,8 +168,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=IOS&adultos=2&criancas=0&bebes=0&ida=27-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:18:16.986682+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:57:19.982800+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -180,8 +180,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=IOS&adultos=2&criancas=0&bebes=0&ida=28-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:18:17.384599+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:57:19.407125+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -192,8 +192,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=IOS&adultos=2&criancas=0&bebes=0&ida=29-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:18:18.281996+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:57:20.020266+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -204,8 +204,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=IOS&adultos=2&criancas=0&bebes=0&ida=30-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:18:22.262509+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:57:25.275100+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -216,8 +216,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=IOS&adultos=2&criancas=0&bebes=0&ida=31-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:18:25.694649+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:57:26.098775+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -228,8 +228,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=BPS&adultos=2&criancas=0&bebes=0&ida=26-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:18:32.217433+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:57:28.292310+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -240,8 +240,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=BPS&adultos=2&criancas=0&bebes=0&ida=27-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:19:25.045103+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:57:38.453645+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -252,8 +252,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=BPS&adultos=2&criancas=0&bebes=0&ida=28-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:19:45.069509+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:58:44.419624+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -264,8 +264,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=BPS&adultos=2&criancas=0&bebes=0&ida=29-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:19:45.178700+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:58:48.082676+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -276,8 +276,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=BPS&adultos=2&criancas=0&bebes=0&ida=30-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:19:46.039362+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:58:49.574253+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -288,8 +288,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=BPS&adultos=2&criancas=0&bebes=0&ida=31-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:19:47.114458+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:58:49.986494+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -300,8 +300,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=MCZ&adultos=2&criancas=0&bebes=0&ida=26-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:19:50.071900+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:58:53.449308+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -312,8 +312,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=MCZ&adultos=2&criancas=0&bebes=0&ida=27-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:19:53.465627+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:58:54.979578+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -324,8 +324,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=MCZ&adultos=2&criancas=0&bebes=0&ida=28-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:19:59.971896+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:58:56.855515+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -336,8 +336,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=MCZ&adultos=2&criancas=0&bebes=0&ida=29-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:20:53.135103+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T09:59:06.662943+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -345,12 +345,12 @@
       "origin": "CNF",
       "destination": "MCZ",
       "departure_date": "2026-12-30",
-      "total_pix_brl": 3240.0,
-      "flight_info": "11:00 ➔ 22:35 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=MCZ&adultos=2&criancas=0&bebes=0&ida=30-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:20:38.584798+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:00:12.705947+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "IDA",
@@ -360,8 +360,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=MCZ&adultos=2&criancas=0&bebes=0&ida=31-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:21:13.467046+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:00:16.413984+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -372,8 +372,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=NAT&adultos=2&criancas=0&bebes=0&ida=26-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:21:14.499892+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:00:18.506816+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -384,8 +384,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=NAT&adultos=2&criancas=0&bebes=0&ida=27-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:21:15.376884+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:00:19.112029+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -396,8 +396,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=NAT&adultos=2&criancas=0&bebes=0&ida=28-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:21:17.723976+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:00:21.833185+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -408,8 +408,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=NAT&adultos=2&criancas=0&bebes=0&ida=29-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:21:21.222689+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:00:23.687033+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -420,8 +420,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=NAT&adultos=2&criancas=0&bebes=0&ida=30-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:21:27.800797+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:00:25.441546+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -429,12 +429,12 @@
       "origin": "CNF",
       "destination": "NAT",
       "departure_date": "2026-12-31",
-      "total_pix_brl": 2659.0,
-      "flight_info": "10:35 ➔ 16:05 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=NAT&adultos=2&criancas=0&bebes=0&ida=31-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:22:01.408848+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:00:34.917175+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "IDA",
@@ -444,8 +444,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=FOR&adultos=2&criancas=0&bebes=0&ida=26-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:22:21.081816+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:01:40.957361+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -456,8 +456,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=FOR&adultos=2&criancas=0&bebes=0&ida=27-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:22:41.222877+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:01:44.664709+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -468,8 +468,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=FOR&adultos=2&criancas=0&bebes=0&ida=28-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:22:42.638273+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:01:46.756323+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -480,8 +480,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=FOR&adultos=2&criancas=0&bebes=0&ida=29-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:22:43.293148+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:01:47.908932+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -492,8 +492,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=FOR&adultos=2&criancas=0&bebes=0&ida=30-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:22:45.557236+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:01:50.091524+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -504,8 +504,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=FOR&adultos=2&criancas=0&bebes=0&ida=31-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:22:48.860230+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:01:52.001688+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -516,8 +516,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=REC&adultos=2&criancas=0&bebes=0&ida=26-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:22:55.622805+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:01:53.937027+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -528,8 +528,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=REC&adultos=2&criancas=0&bebes=0&ida=27-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:23:29.392602+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:02:03.174478+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -540,8 +540,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=REC&adultos=2&criancas=0&bebes=0&ida=28-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:23:49.034047+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:03:09.284758+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -549,12 +549,12 @@
       "origin": "CNF",
       "destination": "REC",
       "departure_date": "2026-12-29",
-      "total_pix_brl": 2808.0,
-      "flight_info": "11:05 ➔ 20:40 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=REC&adultos=2&criancas=0&bebes=0&ida=29-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:23:51.970434+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:03:12.989576+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "IDA",
@@ -564,8 +564,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=REC&adultos=2&criancas=0&bebes=0&ida=30-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:24:10.508566+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:03:15.061725+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -576,8 +576,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=REC&adultos=2&criancas=0&bebes=0&ida=31-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:24:11.260413+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:03:16.867575+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -588,8 +588,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=AJU&adultos=2&criancas=0&bebes=0&ida=26-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:24:13.368571+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:03:18.608572+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -600,8 +600,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=AJU&adultos=2&criancas=0&bebes=0&ida=27-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:24:16.748940+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:03:20.514420+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -612,8 +612,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=AJU&adultos=2&criancas=0&bebes=0&ida=28-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:24:23.422649+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:03:22.342077+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -624,8 +624,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=AJU&adultos=2&criancas=0&bebes=0&ida=29-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:24:57.385579+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:03:31.644654+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -633,12 +633,12 @@
       "origin": "CNF",
       "destination": "AJU",
       "departure_date": "2026-12-30",
-      "total_pix_brl": null,
-      "flight_info": null,
+      "total_pix_brl": 2952.0,
+      "flight_info": "04:55 ➔ 13:35 (1 Parada)",
       "url": "https://123milhas.com/v2/busca?de=CNF&para=AJU&adultos=2&criancas=0&bebes=0&ida=30-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:25:16.987980+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "TOTAL_PIX_NOT_FOUND"
+      "checked_at": "2026-11-16T10:04:21.797087+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "SUCCESS"
     },
     {
       "direction": "IDA",
@@ -648,8 +648,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=AJU&adultos=2&criancas=0&bebes=0&ida=31-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:25:19.805626+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:04:41.418599+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -657,24 +657,24 @@
       "origin": "CNF",
       "destination": "SLZ",
       "departure_date": "2026-12-26",
-      "total_pix_brl": 2767.0,
-      "flight_info": "07:45 ➔ 17:25 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=SLZ&adultos=2&criancas=0&bebes=0&ida=26-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:24:22.069508+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:04:43.422484+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "IDA",
       "origin": "CNF",
       "destination": "SLZ",
       "departure_date": "2026-12-27",
-      "total_pix_brl": 1989.0,
-      "flight_info": "23:30 ➔ 04:15 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=SLZ&adultos=2&criancas=0&bebes=0&ida=27-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:25:22.219966+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:04:45.544012+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "IDA",
@@ -684,8 +684,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=SLZ&adultos=2&criancas=0&bebes=0&ida=28-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:25:41.108047+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:04:47.777097+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -696,8 +696,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=SLZ&adultos=2&criancas=0&bebes=0&ida=29-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:25:44.491045+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:04:49.101913+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -708,8 +708,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=SLZ&adultos=2&criancas=0&bebes=0&ida=30-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:25:49.889680+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:04:51.010526+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -720,8 +720,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=SLZ&adultos=2&criancas=0&bebes=0&ida=31-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:25:51.661886+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:04:59.944728+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -732,8 +732,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=JJD&adultos=2&criancas=0&bebes=0&ida=26-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:26:25.367800+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:05:50.729692+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -741,12 +741,12 @@
       "origin": "CNF",
       "destination": "JJD",
       "departure_date": "2026-12-27",
-      "total_pix_brl": null,
-      "flight_info": null,
+      "total_pix_brl": 5605.0,
+      "flight_info": "20:35 ➔ 10:00 (1 Parada)",
       "url": "https://123milhas.com/v2/busca?de=CNF&para=JJD&adultos=2&criancas=0&bebes=0&ida=27-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:26:45.261646+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "TOTAL_PIX_NOT_FOUND"
+      "checked_at": "2026-11-16T10:06:01.666626+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "SUCCESS"
     },
     {
       "direction": "IDA",
@@ -756,8 +756,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=JJD&adultos=2&criancas=0&bebes=0&ida=28-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:26:47.844305+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:06:11.874002+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -768,8 +768,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=JJD&adultos=2&criancas=0&bebes=0&ida=29-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:26:50.224523+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:06:13.898387+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -777,12 +777,12 @@
       "origin": "CNF",
       "destination": "JJD",
       "departure_date": "2026-12-30",
-      "total_pix_brl": 4315.0,
-      "flight_info": "04:55 ➔ 16:45 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=JJD&adultos=2&criancas=0&bebes=0&ida=30-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:25:50.658557+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:06:16.208414+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "IDA",
@@ -792,9 +792,9 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=JJD&adultos=2&criancas=0&bebes=0&ida=31-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:26:38.725207+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "NO_VALID_FLIGHTS"
+      "checked_at": "2026-11-16T10:06:18.410806+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "IDA",
@@ -804,8 +804,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=TXF&adultos=2&criancas=0&bebes=0&ida=26-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:27:18.159198+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:06:19.956343+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -816,8 +816,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=TXF&adultos=2&criancas=0&bebes=0&ida=27-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:27:19.104805+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:06:28.472590+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -828,8 +828,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=TXF&adultos=2&criancas=0&bebes=0&ida=28-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:27:20.349703+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:07:19.522466+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -840,8 +840,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=TXF&adultos=2&criancas=0&bebes=0&ida=29-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:27:53.389999+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:07:29.895437+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -852,8 +852,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=TXF&adultos=2&criancas=0&bebes=0&ida=30-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:28:06.631473+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:07:40.204568+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -864,8 +864,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=CNF&para=TXF&adultos=2&criancas=0&bebes=0&ida=31-12-2026&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:28:13.100113+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:07:42.150733+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -876,8 +876,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JPA&para=CNF&adultos=2&criancas=0&bebes=0&ida=02-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:28:15.839028+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:07:44.395468+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -888,8 +888,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JPA&para=CNF&adultos=2&criancas=0&bebes=0&ida=03-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:28:18.325476+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:07:47.208124+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -900,8 +900,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JPA&para=CNF&adultos=2&criancas=0&bebes=0&ida=04-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:28:45.923052+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:07:48.708285+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -912,8 +912,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JPA&para=CNF&adultos=2&criancas=0&bebes=0&ida=05-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:28:47.668125+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:07:56.944390+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -924,8 +924,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JPA&para=CNF&adultos=2&criancas=0&bebes=0&ida=06-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:28:48.825832+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:08:48.240150+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -936,8 +936,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JPA&para=CNF&adultos=2&criancas=0&bebes=0&ida=07-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:29:21.363962+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:08:58.292330+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -948,8 +948,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JPA&para=CNF&adultos=2&criancas=0&bebes=0&ida=08-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:29:34.393494+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:09:08.665148+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -960,8 +960,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JPA&para=CNF&adultos=2&criancas=0&bebes=0&ida=09-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:29:41.054352+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:09:10.630647+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -972,8 +972,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JPA&para=CNF&adultos=2&criancas=0&bebes=0&ida=10-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:29:43.843452+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:09:12.673836+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -984,8 +984,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JPA&para=CNF&adultos=2&criancas=0&bebes=0&ida=11-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:29:46.321898+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:09:15.541781+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -996,8 +996,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SSA&para=CNF&adultos=2&criancas=0&bebes=0&ida=02-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:30:13.600464+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:09:17.815774+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1008,8 +1008,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SSA&para=CNF&adultos=2&criancas=0&bebes=0&ida=03-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:30:15.766987+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:09:25.285587+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1020,8 +1020,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SSA&para=CNF&adultos=2&criancas=0&bebes=0&ida=04-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:30:16.972274+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:10:16.719457+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1032,8 +1032,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SSA&para=CNF&adultos=2&criancas=0&bebes=0&ida=05-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:30:49.083749+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:10:26.729017+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1044,8 +1044,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SSA&para=CNF&adultos=2&criancas=0&bebes=0&ida=06-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:31:02.170659+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:10:36.857443+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1056,8 +1056,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SSA&para=CNF&adultos=2&criancas=0&bebes=0&ida=07-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:31:08.822865+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:10:39.209432+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1068,8 +1068,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SSA&para=CNF&adultos=2&criancas=0&bebes=0&ida=08-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:31:11.786426+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:10:40.993697+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1080,8 +1080,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SSA&para=CNF&adultos=2&criancas=0&bebes=0&ida=09-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:31:14.089795+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:10:44.124225+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1092,8 +1092,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SSA&para=CNF&adultos=2&criancas=0&bebes=0&ida=10-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:31:41.449302+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:10:46.443485+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1104,8 +1104,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SSA&para=CNF&adultos=2&criancas=0&bebes=0&ida=11-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:31:43.810137+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:10:53.583130+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1116,8 +1116,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=IOS&para=CNF&adultos=2&criancas=0&bebes=0&ida=02-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:31:45.264848+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:11:45.612459+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1128,8 +1128,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=IOS&para=CNF&adultos=2&criancas=0&bebes=0&ida=03-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:32:16.979506+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:11:55.159874+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1137,12 +1137,12 @@
       "origin": "IOS",
       "destination": "CNF",
       "departure_date": "2027-01-04",
-      "total_pix_brl": 6207.0,
-      "flight_info": "10:20 ➔ 16:15 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=IOS&para=CNF&adultos=2&criancas=0&bebes=0&ida=04-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:31:18.900751+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:12:05.182635+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "VOLTA",
@@ -1152,8 +1152,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=IOS&para=CNF&adultos=2&criancas=0&bebes=0&ida=05-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:32:36.646256+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:12:07.435664+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1164,8 +1164,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=IOS&para=CNF&adultos=2&criancas=0&bebes=0&ida=06-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:32:39.599037+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:12:09.498536+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1176,8 +1176,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=IOS&para=CNF&adultos=2&criancas=0&bebes=0&ida=07-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:32:41.944012+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:12:12.440190+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1188,8 +1188,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=IOS&para=CNF&adultos=2&criancas=0&bebes=0&ida=08-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:32:46.942156+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:12:14.826414+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1200,8 +1200,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=IOS&para=CNF&adultos=2&criancas=0&bebes=0&ida=09-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:33:09.366699+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:12:22.010409+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1212,8 +1212,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=IOS&para=CNF&adultos=2&criancas=0&bebes=0&ida=10-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:33:11.842197+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:13:14.599053+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1224,8 +1224,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=IOS&para=CNF&adultos=2&criancas=0&bebes=0&ida=11-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:33:13.493464+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:13:23.521539+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1236,8 +1236,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=BPS&para=CNF&adultos=2&criancas=0&bebes=0&ida=02-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:33:44.789518+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:13:33.474145+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1245,12 +1245,12 @@
       "origin": "BPS",
       "destination": "CNF",
       "departure_date": "2027-01-03",
-      "total_pix_brl": 5007.0,
-      "flight_info": "04:45 ➔ 14:25 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=BPS&para=CNF&adultos=2&criancas=0&bebes=0&ida=03-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:33:10.019903+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:13:35.900558+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "VOLTA",
@@ -1260,8 +1260,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=BPS&para=CNF&adultos=2&criancas=0&bebes=0&ida=04-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:34:07.578250+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:13:38.035752+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1272,8 +1272,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=BPS&para=CNF&adultos=2&criancas=0&bebes=0&ida=05-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:34:09.977898+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:13:40.966107+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1284,8 +1284,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=BPS&para=CNF&adultos=2&criancas=0&bebes=0&ida=06-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:34:14.892351+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:13:43.583838+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1293,12 +1293,12 @@
       "origin": "BPS",
       "destination": "CNF",
       "departure_date": "2027-01-07",
-      "total_pix_brl": 1627.0,
-      "flight_info": "11:05 ➔ 16:15 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=BPS&para=CNF&adultos=2&criancas=0&bebes=0&ida=07-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:33:53.067613+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:13:50.552187+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "VOLTA",
@@ -1308,8 +1308,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=BPS&para=CNF&adultos=2&criancas=0&bebes=0&ida=08-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:34:38.024702+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:14:43.157291+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1320,8 +1320,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=BPS&para=CNF&adultos=2&criancas=0&bebes=0&ida=09-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:34:39.963656+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:14:51.804027+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1332,8 +1332,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=BPS&para=CNF&adultos=2&criancas=0&bebes=0&ida=10-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:34:41.542057+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:15:01.927557+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1344,8 +1344,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=BPS&para=CNF&adultos=2&criancas=0&bebes=0&ida=11-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:35:12.694371+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:15:04.107498+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1356,8 +1356,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=MCZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=02-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:35:20.806737+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:15:06.380743+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1365,12 +1365,12 @@
       "origin": "MCZ",
       "destination": "CNF",
       "departure_date": "2027-01-03",
-      "total_pix_brl": 7483.0,
-      "flight_info": "06:50 ➔ 12:20 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=MCZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=03-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:34:49.629373+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:15:09.558933+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "VOLTA",
@@ -1380,8 +1380,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=MCZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=04-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:35:39.628383+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:15:12.036646+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1392,8 +1392,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=MCZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=05-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:35:43.431966+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:15:18.869761+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1404,8 +1404,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=MCZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=06-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:36:05.971800+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:16:11.839631+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1416,8 +1416,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=MCZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=07-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:36:11.527968+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:16:20.052157+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1428,8 +1428,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=MCZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=08-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:36:10.445676+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:16:30.205878+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1440,8 +1440,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=MCZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=09-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:36:17.447978+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:16:32.492611+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1452,8 +1452,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=MCZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=10-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:36:41.981112+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:16:34.791374+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1464,8 +1464,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=MCZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=11-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:36:48.731505+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:16:38.477078+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1476,8 +1476,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=NAT&para=CNF&adultos=2&criancas=0&bebes=0&ida=02-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:37:07.454066+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:16:40.700766+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1488,8 +1488,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=NAT&para=CNF&adultos=2&criancas=0&bebes=0&ida=03-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:37:11.539367+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:16:47.594688+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1500,8 +1500,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=NAT&para=CNF&adultos=2&criancas=0&bebes=0&ida=04-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:37:33.885487+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:17:40.500089+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1512,8 +1512,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=NAT&para=CNF&adultos=2&criancas=0&bebes=0&ida=05-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:37:38.425746+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:17:48.617599+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1524,8 +1524,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=NAT&para=CNF&adultos=2&criancas=0&bebes=0&ida=06-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:37:39.593906+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:17:58.625499+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1536,8 +1536,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=NAT&para=CNF&adultos=2&criancas=0&bebes=0&ida=07-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:37:45.438590+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:18:00.789143+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1548,8 +1548,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=NAT&para=CNF&adultos=2&criancas=0&bebes=0&ida=08-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:38:09.822124+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:18:03.067404+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1560,8 +1560,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=NAT&para=CNF&adultos=2&criancas=0&bebes=0&ida=09-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:38:16.524212+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:18:06.794154+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1569,12 +1569,12 @@
       "origin": "NAT",
       "destination": "CNF",
       "departure_date": "2027-01-10",
-      "total_pix_brl": 2535.0,
-      "flight_info": "04:55 ➔ 12:20 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=NAT&para=CNF&adultos=2&criancas=0&bebes=0&ida=10-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:37:19.026065+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:18:09.101447+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "VOLTA",
@@ -1584,8 +1584,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=NAT&para=CNF&adultos=2&criancas=0&bebes=0&ida=11-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:38:39.698754+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:18:16.216772+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1596,8 +1596,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=FOR&para=CNF&adultos=2&criancas=0&bebes=0&ida=02-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:38:46.711291+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:19:09.138002+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1608,8 +1608,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=FOR&para=CNF&adultos=2&criancas=0&bebes=0&ida=03-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:39:01.677789+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:19:17.112091+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1620,8 +1620,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=FOR&para=CNF&adultos=2&criancas=0&bebes=0&ida=04-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:39:06.275186+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:19:27.050940+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1632,8 +1632,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=FOR&para=CNF&adultos=2&criancas=0&bebes=0&ida=05-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:39:07.658710+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:19:29.092939+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1644,8 +1644,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=FOR&para=CNF&adultos=2&criancas=0&bebes=0&ida=06-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:39:13.459800+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:19:31.309554+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1656,8 +1656,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=FOR&para=CNF&adultos=2&criancas=0&bebes=0&ida=07-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:39:37.830752+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:19:35.210884+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1668,8 +1668,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=FOR&para=CNF&adultos=2&criancas=0&bebes=0&ida=08-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:39:44.234854+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:19:37.701934+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1680,8 +1680,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=FOR&para=CNF&adultos=2&criancas=0&bebes=0&ida=09-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:40:07.678474+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:19:44.661052+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1692,8 +1692,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=FOR&para=CNF&adultos=2&criancas=0&bebes=0&ida=10-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:40:14.628114+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:20:37.892807+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1701,12 +1701,12 @@
       "origin": "FOR",
       "destination": "CNF",
       "departure_date": "2027-01-11",
-      "total_pix_brl": 1533.0,
-      "flight_info": "17:05 ➔ 22:05 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=FOR&para=CNF&adultos=2&criancas=0&bebes=0&ida=11-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:39:14.196501+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:20:45.522046+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "VOLTA",
@@ -1716,8 +1716,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=REC&para=CNF&adultos=2&criancas=0&bebes=0&ida=02-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:40:34.040543+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:20:55.400859+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1728,8 +1728,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=REC&para=CNF&adultos=2&criancas=0&bebes=0&ida=03-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:40:35.572417+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:20:57.406831+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1740,8 +1740,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=REC&para=CNF&adultos=2&criancas=0&bebes=0&ida=04-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:40:41.913441+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:20:59.619865+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1752,8 +1752,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=REC&para=CNF&adultos=2&criancas=0&bebes=0&ida=05-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:40:42.395642+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:21:03.789830+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1764,8 +1764,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=REC&para=CNF&adultos=2&criancas=0&bebes=0&ida=06-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:41:05.551028+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:21:06.241311+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1776,8 +1776,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=REC&para=CNF&adultos=2&criancas=0&bebes=0&ida=07-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:41:12.604137+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:21:13.123312+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1788,8 +1788,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=REC&para=CNF&adultos=2&criancas=0&bebes=0&ida=08-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:41:35.524644+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:22:06.690881+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1800,8 +1800,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=REC&para=CNF&adultos=2&criancas=0&bebes=0&ida=09-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:41:42.583401+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:22:13.792213+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1809,12 +1809,12 @@
       "origin": "REC",
       "destination": "CNF",
       "departure_date": "2027-01-10",
-      "total_pix_brl": 2770.0,
-      "flight_info": "04:00 ➔ 12:30 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=REC&para=CNF&adultos=2&criancas=0&bebes=0&ida=10-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:40:46.758087+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:22:23.619716+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "VOLTA",
@@ -1824,8 +1824,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=REC&para=CNF&adultos=2&criancas=0&bebes=0&ida=11-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:42:03.203967+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:22:25.685110+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1836,8 +1836,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=AJU&para=CNF&adultos=2&criancas=0&bebes=0&ida=02-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:42:09.602148+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:22:27.912099+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1848,8 +1848,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=AJU&para=CNF&adultos=2&criancas=0&bebes=0&ida=03-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:42:10.495793+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:22:32.227071+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1860,8 +1860,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=AJU&para=CNF&adultos=2&criancas=0&bebes=0&ida=04-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:42:14.744795+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:22:34.813589+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1869,12 +1869,12 @@
       "origin": "AJU",
       "destination": "CNF",
       "departure_date": "2027-01-05",
-      "total_pix_brl": 3612.0,
-      "flight_info": "10:45 ➔ 17:35 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=AJU&para=CNF&adultos=2&criancas=0&bebes=0&ida=05-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:41:47.698422+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:22:41.832977+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "VOLTA",
@@ -1884,8 +1884,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=AJU&para=CNF&adultos=2&criancas=0&bebes=0&ida=06-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:42:41.884309+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:23:35.450415+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1896,8 +1896,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=AJU&para=CNF&adultos=2&criancas=0&bebes=0&ida=07-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:43:03.192376+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:23:42.152571+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1908,8 +1908,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=AJU&para=CNF&adultos=2&criancas=0&bebes=0&ida=08-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:43:10.729356+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:23:52.629840+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1920,8 +1920,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=AJU&para=CNF&adultos=2&criancas=0&bebes=0&ida=09-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:43:17.477551+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:23:55.008397+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1929,12 +1929,12 @@
       "origin": "AJU",
       "destination": "CNF",
       "departure_date": "2027-01-10",
-      "total_pix_brl": 2438.0,
-      "flight_info": "14:20 ➔ 21:20 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=AJU&para=CNF&adultos=2&criancas=0&bebes=0&ida=10-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:42:47.315071+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:23:57.476255+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "VOLTA",
@@ -1944,8 +1944,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=AJU&para=CNF&adultos=2&criancas=0&bebes=0&ida=11-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:43:37.522110+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:24:01.573898+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1956,8 +1956,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SLZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=02-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:43:38.555255+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:24:04.245292+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1968,8 +1968,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SLZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=03-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:43:42.716819+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:24:10.088505+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1980,8 +1980,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SLZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=04-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:44:09.652397+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:25:04.074474+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -1992,8 +1992,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SLZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=05-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:44:14.922057+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:25:10.532120+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2001,12 +2001,12 @@
       "origin": "SLZ",
       "destination": "CNF",
       "departure_date": "2027-01-06",
-      "total_pix_brl": 2340.0,
-      "flight_info": "03:20 ➔ 14:25 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SLZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=06-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:43:45.467009+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:25:22.005820+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "VOLTA",
@@ -2016,8 +2016,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SLZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=07-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:44:38.477294+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:25:24.471660+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2028,8 +2028,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SLZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=08-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:44:45.227874+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:25:27.853968+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2040,8 +2040,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SLZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=09-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:45:05.314497+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:25:30.367090+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2052,8 +2052,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SLZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=10-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:45:06.508885+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:25:32.559154+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2064,8 +2064,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=SLZ&para=CNF&adultos=2&criancas=0&bebes=0&ida=11-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:45:10.358454+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:25:38.730135+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2076,8 +2076,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JJD&para=CNF&adultos=2&criancas=0&bebes=0&ida=02-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:45:13.246116+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:26:32.730553+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2088,33 +2088,33 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JJD&para=CNF&adultos=2&criancas=0&bebes=0&ida=03-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:45:03.766071+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "NO_VALID_FLIGHTS"
+      "checked_at": "2026-11-16T10:26:39.189152+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "VOLTA",
       "origin": "JJD",
       "destination": "CNF",
       "departure_date": "2027-01-04",
-      "total_pix_brl": null,
-      "flight_info": null,
+      "total_pix_brl": 6447.0,
+      "flight_info": "10:45 ➔ 17:35 (1 Parada)",
       "url": "https://123milhas.com/v2/busca?de=JJD&para=CNF&adultos=2&criancas=0&bebes=0&ida=04-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:45:42.583635+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "TOTAL_PIX_NOT_FOUND"
+      "checked_at": "2026-11-16T10:26:00.821825+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "SUCCESS"
     },
     {
       "direction": "VOLTA",
       "origin": "JJD",
       "destination": "CNF",
       "departure_date": "2027-01-05",
-      "total_pix_brl": null,
-      "flight_info": null,
+      "total_pix_brl": 4852.0,
+      "flight_info": "12:15 ➔ 17:45 (1 Parada)",
       "url": "https://123milhas.com/v2/busca?de=JJD&para=CNF&adultos=2&criancas=0&bebes=0&ida=05-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:46:06.251427+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "TOTAL_PIX_NOT_FOUND"
+      "checked_at": "2026-11-16T10:26:37.880645+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "SUCCESS"
     },
     {
       "direction": "VOLTA",
@@ -2124,8 +2124,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JJD&para=CNF&adultos=2&criancas=0&bebes=0&ida=06-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:46:13.108734+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:26:56.328911+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2133,12 +2133,12 @@
       "origin": "JJD",
       "destination": "CNF",
       "departure_date": "2027-01-07",
-      "total_pix_brl": 2875.0,
-      "flight_info": "10:50 ➔ 17:35 (1 Parada)",
+      "total_pix_brl": null,
+      "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JJD&para=CNF&adultos=2&criancas=0&bebes=0&ida=07-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:45:44.951035+00:00",
-      "batch_id": "20261116T021512Z",
-      "status": "SUCCESS"
+      "checked_at": "2026-11-16T10:26:59.226548+00:00",
+      "batch_id": "20261116T095412Z",
+      "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
       "direction": "VOLTA",
@@ -2148,8 +2148,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JJD&para=CNF&adultos=2&criancas=0&bebes=0&ida=08-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:46:33.206294+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:27:01.492127+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2160,8 +2160,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JJD&para=CNF&adultos=2&criancas=0&bebes=0&ida=09-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:46:34.478608+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:27:07.533007+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2172,8 +2172,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JJD&para=CNF&adultos=2&criancas=0&bebes=0&ida=10-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:46:38.165714+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:27:29.860214+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2184,8 +2184,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=JJD&para=CNF&adultos=2&criancas=0&bebes=0&ida=11-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:46:40.886879+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:28:01.695790+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2196,8 +2196,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=TXF&para=CNF&adultos=2&criancas=0&bebes=0&ida=02-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:47:10.390921+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:28:06.533280+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2208,8 +2208,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=TXF&para=CNF&adultos=2&criancas=0&bebes=0&ida=03-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:47:13.082862+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:28:08.368223+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2220,8 +2220,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=TXF&para=CNF&adultos=2&criancas=0&bebes=0&ida=04-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:47:34.164197+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:28:24.864566+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2232,8 +2232,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=TXF&para=CNF&adultos=2&criancas=0&bebes=0&ida=05-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:47:41.128283+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:28:27.900787+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2244,8 +2244,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=TXF&para=CNF&adultos=2&criancas=0&bebes=0&ida=06-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:48:00.786378+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:28:30.319679+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2256,8 +2256,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=TXF&para=CNF&adultos=2&criancas=0&bebes=0&ida=07-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:48:02.412243+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:28:36.113988+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2268,8 +2268,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=TXF&para=CNF&adultos=2&criancas=0&bebes=0&ida=08-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:48:05.843741+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:28:58.489551+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2280,8 +2280,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=TXF&para=CNF&adultos=2&criancas=0&bebes=0&ida=09-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:48:08.625641+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:29:30.105723+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2292,8 +2292,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=TXF&para=CNF&adultos=2&criancas=0&bebes=0&ida=10-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:48:38.225069+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:29:34.774526+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     },
     {
@@ -2304,8 +2304,8 @@
       "total_pix_brl": null,
       "flight_info": null,
       "url": "https://123milhas.com/v2/busca?de=TXF&para=CNF&adultos=2&criancas=0&bebes=0&ida=11-01-2027&classe=3&is_loyalty=0",
-      "checked_at": "2026-11-16T02:48:40.803096+00:00",
-      "batch_id": "20261116T021512Z",
+      "checked_at": "2026-11-16T10:29:36.646639+00:00",
+      "batch_id": "20261116T095412Z",
       "status": "TOTAL_PIX_NOT_FOUND"
     }
   ]
